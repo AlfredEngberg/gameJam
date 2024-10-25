@@ -1,7 +1,6 @@
 import Enemy from './Enemy.js'
 import bossSpriteSheet from './assets/sprites/boss/boss.png'
 
-
 export default class boss extends Enemy {
     constructor(game, x, y) {
         super(game)

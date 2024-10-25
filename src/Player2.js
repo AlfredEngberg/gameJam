@@ -1,7 +1,5 @@
-import Projectile from "./Projectile.js";
+/* import Projectile from "./Projectile.js"; */
 import Sword from "./Sword.js";
-import sprite from "./assets/sprites/gandalf_archer/GandalfHardcore Archer sheet.png";
-import vampire from "./assets/sprites/vampire/vampire_2_edited.png";
 import knightIdle from "./assets/sprites/knight/_Idle.png";
 import knightAttack from "./assets/sprites/knight/_Attack.png";
 import knightRun from "./assets/sprites/knight/_Run.png";
@@ -39,7 +37,7 @@ export default class Player2 {
     this.image = imageAttack;
     const imageDeath= new Image();
     imageDeath.src = knightDeath;
-    this.image = imageDeath;
+    this.image = imageIdle;
 
     this.images = [imageIdle, imageRun, imageAttack, imageDeath];
 

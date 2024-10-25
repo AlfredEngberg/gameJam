@@ -69,7 +69,7 @@ export default class Game {
       this.player2.update(deltaTime)
 
       this.enemies.forEach((enemy) => {
-        enemy.update(this.player, deltaTime)
+        enemy.update(this.player, this.player2, deltaTime)
         if (this.checkCollision(this.player, enemy) && this.bossSpawned === false) {
           enemy.markedForDeletion = true
           if (enemy.type === 'candy') {
@@ -102,6 +102,7 @@ export default class Game {
     this.ui.draw(context)
     if (this.gameStart === true) {
       this.player.draw(context)
+      this.player2.draw(context)
       this.enemies.forEach((enemy) => {
         enemy.draw(context)
       })

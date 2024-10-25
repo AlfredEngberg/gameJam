@@ -1,5 +1,6 @@
 import InputHandler from './InputHandler.js'
 import Player from './Player.js'
+import Player2 from './Player2.js'
 import UserInterface from './UserInterface.js'
 import Pumpkin from './Pumpkin.js'
 import boss from './boss.js'
@@ -30,6 +31,7 @@ export default class Game {
     this.viewCredits = false
 
     this.player = new Player(this)
+    this.player2 = new Player2(this)
   }
 
   update(deltaTime) {
@@ -64,6 +66,7 @@ export default class Game {
         this.enemyTimer += deltaTime
       }
       this.player.update(deltaTime)
+      this.player2.update(deltaTime)
 
       this.enemies.forEach((enemy) => {
         enemy.update(this.player, deltaTime)
@@ -71,6 +74,12 @@ export default class Game {
           enemy.markedForDeletion = true
           if (enemy.type === 'candy') {
             this.player.ammo += 5
+          }
+        }
+        if (this.checkCollision(this.player2, enemy) && this.bossSpawned === false) {
+          enemy.markedForDeletion = true
+          if (enemy.type === 'candy') {
+            this.player2.ammo += 5
           }
         }
         this.player.projectiles.forEach((projectile) => {

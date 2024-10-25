@@ -37,10 +37,25 @@ export default class Pumpkin extends Enemy {
     this.flip = false
   }
 
-  update(player, deltaTime) {
-    const dx = player.x - this.x // calculate the x distance to the player
-    const dy = player.y - this.y // calculate the y distance to the player
-    const distance = Math.sqrt(dx * dx + dy * dy) // calculate the total distance to the player
+  update(player, player2, deltaTime) {
+    const dx1 = player.x - this.x; // calculate the x distance to the player
+    const dy1 = player.y - this.y; // calculate the y distance to the player
+    const distance1 = Math.sqrt(dx1 * dx1 + dy1 * dy1); // calculate the total distance to the player
+    const dx2 = player2.x - this.x; // calculate the x distance to the second player
+    const dy2 = player2.y - this.y; // calculate the y distance to the second player
+    const distance2 = Math.sqrt(dx2 * dx2 + dy2 * dy2); // calculate the total distance to the second player
+    let dx;
+    let dy;
+    let distance;
+    if (distance1 < distance2) {
+      dx = dx1;
+      dy = dy1;
+      distance = distance1;
+    } else {
+      dx = dx2;
+      dy = dy2;
+      distance = distance2;
+    }
     const speedX = (dx / distance) * this.speed // calculate the x speed towards the player
     const speedY = (dy / distance) * this.speed // calculate the y speed towards the player
 

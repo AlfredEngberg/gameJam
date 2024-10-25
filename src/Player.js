@@ -47,6 +47,8 @@ export default class Player {
       frames: 11,
     }
 
+    this.state = "idle"
+
     // flip sprite direction
     this.flip = false
 
@@ -55,29 +57,12 @@ export default class Player {
   }
 
   update(deltaTime) {
-    // Movement left and right
-    if (this.game.keys.includes('ArrowLeft') || this.game.keys.includes('a')) {
-      this.speedX = -this.maxSpeed
-    } else if (
-      this.game.keys.includes('ArrowRight') ||
-      this.game.keys.includes('d')
-    ) {
-      this.speedX = this.maxSpeed
-    } else {
-      this.speedX = 0
+    if (this.lives <= 0 && this.state !== "death") {
+      this.setState("death");
+      this.game.gameOver = true;
     }
-
-    // movemeny up and down
-    if (this.game.keys.includes('ArrowUp') || this.game.keys.includes('w')) {
-      this.speedY = -this.maxSpeed
-    } else if (
-      this.game.keys.includes('ArrowDown') ||
-      this.game.keys.includes('s')
-    ) {
-      this.speedY = this.maxSpeed
-    } else {
-      this.speedY = 0
-    }
+    
+    this.move()
 
     // play run or idle animation
     if (this.shooting) {
@@ -93,9 +78,6 @@ export default class Player {
       this.maxFrame = this.idle.frames
       this.frameY = this.idle.frameY
     }
-
-    this.y += this.speedY
-    this.x += this.speedX
 
     // projectiles
     this.projectiles.forEach((projectile) => {
@@ -131,6 +113,31 @@ export default class Player {
     if (this.frameX >= this.maxFrame) {
       this.frameX = 0
     }
+  }
+
+  move() {
+    // Movement left and right
+    if (this.game.keys.includes("a")) {
+      this.speedX = -this.maxSpeed;
+      this.flip = true;
+    } else if (this.game.keys.includes("d")) {
+      this.flip = false;
+      this.speedX = this.maxSpeed;
+    } else {
+      this.speedX = 0;
+    }
+
+    // movemeny up and down
+    if (this.game.keys.includes("w")) {
+      this.speedY = -this.maxSpeed;
+    } else if (this.game.keys.includes("s")) {
+      this.speedY = this.maxSpeed;
+    } else {
+      this.speedY = 0;
+    }
+
+    this.y += this.speedY;
+    this.x += this.speedX;
   }
 
   draw(context) {
@@ -191,6 +198,34 @@ export default class Player {
     } else {
       console.log('out of ammo')
     }
+  }
+
+  setState(state) {
+    if (this.state === state) {
+      return;
+    }
+    switch (state) {
+      case "running":
+        this.state = "running";
+        this.frameY = this.running.frameY;
+        this.maxFrame = this.running.frames;
+        break;
+      case "shooting":
+        if (this.ammo <= 0) {
+          console.log("out of ammo");
+          this.setState("idle");
+          break;
+        }
+        this.state = "shooting";
+        this.frameY = this.shooting.frameY;
+        this.maxFrame = this.shooting.frames;
+        break;
+      default:
+        this.state = "idle";
+        this.frameY = this.idle.frameY;
+        this.maxFrame = this.idle.frames;
+    }
+    this.frameX = 0;
   }
 
 }

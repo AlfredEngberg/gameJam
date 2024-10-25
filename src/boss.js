@@ -1,13 +1,5 @@
 import Enemy from './Enemy.js'
-/* import attack1 from './assets/sprites/boss/Attack_1.png'
-import attack2 from './assets/sprites/boss/Attack2.png'
-import attack3 from './assets/sprites/boss/Attack3.png'
-import death from './assets/sprites/boss/Dead.png'
-import hurt from './assets/sprites/boss/Hurt.png'
-import idle from './assets/sprites/boss/Idle.png'
-import run from './assets/sprites/boss/Run.png' */
-import walk from './assets/sprites/boss/Walk.png'
-/* import special from './assets/sprites/boss/Special.png' */
+import bossSpriteSheet from './assets/sprites/boss/boss.png'
 
 
 export default class boss extends Enemy {
@@ -21,24 +13,37 @@ export default class boss extends Enemy {
         this.lives = 20
         this.color = 'orange'
 
-        // boss Walk Image
-        const walkImage = new Image()
-        walkImage.src = walk
-        this.image = walkImage
+        // boss Image
+        const image = new Image()
+        image.src = bossSpriteSheet
+        this.image = image
 
         // sprite Animation
         this.frameX = 0
+        this.frames = 0
         this.frameY = 0
         this.maxFrame = 13
         this.fps = 20
         this.timer = 0
         this.interval = 1000 / this.fps
+        this.idle = {
+            frameY: 0,
+            frameX: 0,
+            frames: 7,
+        }
         this.walk = {
             frameY: 0,
-            frames: 13,
+            frameX: 13,
+            frames: 7,
+        }
+        this.attack = {
+            frameY: 0,
+            frameX: 7,
+            frames: 5
         }
         this.death = {
-            frameY: 3,
+            frameY: 0,
+            frameX: 20,
             frames: 9,
         }
 
@@ -74,6 +79,7 @@ export default class boss extends Enemy {
         // Animation
         if (speedX !== 0) {
             this.frameY = this.walk.frameY
+            this.frameX = this.walk.frameX
             this.maxFrame = this.walk.frames
         } else {
             this.frameY = this.death.frameY

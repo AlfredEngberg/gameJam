@@ -53,16 +53,33 @@ export default class UserInterface {
     if (this.game.viewControls === true && this.game.viewCredits === false) {
       context.textAlign = 'center'
       context.font = `50px ${this.fontFamily}`
-      context.strokeRect(this.game.width / 4 - 150, this.game.height / 3, 750, 100)
+// Player 1
+      context.fillText(
+        'Player 1:',
+        this.game.width / 2,
+        this.game.height / 3 - 20,
+      )
       context.fillText(
         'WASD to move, Click to shoot',
         this.game.width / 2,
         this.game.height / 2 - 20,
       )
+// Player 2
+      context.fillText(
+        'Player 2:',
+        this.game.width / 2,
+        this.game.height / 1.4 - 20,
+      )
+      context.fillText(
+        'Arrow keys to move, Space to hit',
+        this.game.width / 2,
+        this.game.height / 1.2 - 20,
+      )
+// Back
       context.fillText(
         'press "B" to go back',
         this.game.width / 2,
-        this.game.height / 1.4 - 20
+        this.game.height / 1 - 20
       )
     }
 

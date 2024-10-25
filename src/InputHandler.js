@@ -37,14 +37,14 @@ export default class InputHandler {
         this.game.gameStart = true
         console.log('start game')
       }
-      if (event.key === 'c') {
+      if (event.key === 'c' && gameStart === false) {
         if (this.game.viewCredits === true) {
           this.game.viewCredits = false
         }
         this.game.viewControls = true
         this.game.viewMainMenu = false
       }
-      if (event.key === 'v') {
+      if (event.key === 'v' && gameStart === false) {
         if (this.game.viewControls === true) {
           this.game.viewControls = false
         }

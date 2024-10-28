@@ -1,9 +1,14 @@
+import shootsound from './assets/sounds/Player2Shoot.wav'
+import punchsound from './assets/sounds/Player1Punch.wav'
 export default class InputHandler {
   constructor(game) {
     this.game = game
     this.mouseX = 0
     this.mouseY = 0
-
+this.shootsound = new Audio
+this.shootsound.src = shootsound
+this.punchsound = new Audio
+this.punchsound.src = punchsound
     window.addEventListener('keydown', (event) => {
       if (
         (event.key === 'ArrowUp' ||
@@ -23,6 +28,7 @@ export default class InputHandler {
       }
 
       if (event.key === ' ') {
+        this.punchsound.play()
         this.game.player2.setState("shooting")
       }
 
@@ -70,6 +76,7 @@ export default class InputHandler {
     })
 
     window.addEventListener('mousedown', (event) => {
+      this.shootsound.play()
       this.game.player.setState("shooting");
     })
   }

@@ -11,14 +11,6 @@ export default class boss extends Enemy {
         this.y = y
         this.speed = 2
         this.lives = 20
-        this.color = 'orange'
-
-//boss sound
-this.sound = new Audio 
-    this.sound.src = Laugh
-
-
-
 
         // boss Walk Image
         const walkImage = new Image()
@@ -26,35 +18,29 @@ this.sound = new Audio
         this.image = walkImage
 
         // sprite Animation
-        this.frameX = 0
-        this.frameXStart = 0
+        this.frameX = 1
         this.frameY = 0
-        this.frames = 0
-        this.maxFrame = 13
-        this.fps = 4
+        this.maxFrame = 0
+        this.fps = 20
         this.timer = 0
         this.interval = 1000 / this.fps
         this.walk = {
-            frameXStart: 0,
             frameY: 0,
-            frameX: 0,
             frames: 7,
         }
-        this.attack = {
-            frameXStart: 0,
-            frameY: 0,
-            frameX: 7,
-            frames: 5
-        }
         this.death = {
-            frameXStart: 0,
-            frameY: 0,
-            frameX: 20,
+            frameY: 3,
             frames: 9,
         }
 
         // Flip sprite
         this.flip = false
+
+        //boss sound
+        this.sound = new Audio
+        this.sound.src = Laugh
+
+
     }
 
     update(player, player2, deltaTime) {
@@ -83,35 +69,32 @@ this.sound = new Audio
 
         // Animation
         if (speedX !== 0) {
-            this.frameXStart = this.walk.frameXStart
             this.frameY = this.walk.frameY
-            this.frameX = this.walk.frameX
             this.maxFrame = this.walk.frames
-        }/*  else {
+          } else {
             this.frameY = this.death.frameY
             this.maxFrame = this.death.frames
-        } */
-
-        if (this.timer > this.interval) {
+          }
+      
+          if (this.timer > this.interval) {
             this.frameX++
             this.timer = 0
-        } else {
+          } else {
             this.timer += deltaTime
-        }
-
-        if (this.frameX >= this.maxFrame) {
+          }
+      
+          if (this.frameX >= this.maxFrame) {
             this.frameX = 0
-            this.sound.play()
-        }
-
-        this.x += speedX // move the enemy towards the player on the x axis
-        this.y += speedY // move the enemy towards the player on the y axis
-
-        if (speedX < 0) {
+          }
+      
+          this.x += speedX // move the enemy towards the player on the x axis
+          this.y += speedY // move the enemy towards the player on the y axis
+      
+          if (speedX < 0) {
             this.flip = true
-        } else if (this.speedX > 0) {
+          } else if (this.speedX > 0) {
             this.flip = false
-        }
+          }
     }
 
 

@@ -5,6 +5,7 @@ import UserInterface from './UserInterface.js'
 import Pumpkin from './Pumpkin.js'
 import boss from './boss.js'
 import Candy from './Candy.js'
+import Stinger from './assets/sounds/Stinger.wav'
 export default class Game {
   constructor(width, height, canvasPosition) {
     this.width = width
@@ -25,6 +26,9 @@ export default class Game {
     this.bossSpawned = false
 
 
+this.sound = new Audio 
+    this.sound.src = Stinger
+
     this.gameStart = false
     this.viewMainMenu = true
     this.viewControls = false
@@ -37,6 +41,7 @@ export default class Game {
   update(deltaTime) {
     if (!this.gameOver && this.gameStart === true) {
       this.gameTime += deltaTime
+      
     }
 
     if (this.gameStart === true) {
@@ -60,6 +65,7 @@ export default class Game {
         this.enemyTimer = 0
       } else if (this.enemiesKilled === 10 && this.bossSpawned === false) {
         this.enemies.push(new boss(this, 200, 100))
+        this.sound.play();
         this.bossSpawned = true
         console.log('boss spawned')
       } else {
@@ -69,14 +75,17 @@ export default class Game {
       this.player2.update(deltaTime)
 
       this.enemies.forEach((enemy) => {
+        
         enemy.update(this.player, this.player2, deltaTime)
         if (this.checkCollision(this.player, enemy) && this.bossSpawned === false) {
+          
           enemy.markedForDeletion = true
           if (enemy.type === 'candy') {
             this.player.ammo += 5
           }
         }
         if (this.checkCollision(this.player2, enemy) && this.bossSpawned === false) {
+          
           enemy.markedForDeletion = true
           if (enemy.type === 'candy') {
             this.player2.ammo += 5
@@ -123,7 +132,9 @@ export default class Game {
   }
 
   checkCollision(object1, object2) {
+    
     return (
+      
       object1.x < object2.x + object2.width &&
       object1.x + object1.width > object2.x &&
       object1.y < object2.y + object2.height &&

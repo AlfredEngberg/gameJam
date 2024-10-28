@@ -4,8 +4,8 @@ import bossSpriteSheet from './assets/sprites/boss/boss.png'
 export default class boss extends Enemy {
     constructor(game, x, y) {
         super(game)
-        this.width = 128
-        this.height = 128
+        this.width = 64
+        this.height = 48
         this.x = x
         this.y = y
         this.speed = 2
@@ -19,28 +19,27 @@ export default class boss extends Enemy {
 
         // sprite Animation
         this.frameX = 0
-        this.frames = 0
+        this.frameXStart = 0
         this.frameY = 0
+        this.frames = 0
         this.maxFrame = 13
-        this.fps = 20
+        this.fps = 4
         this.timer = 0
         this.interval = 1000 / this.fps
-        this.idle = {
+        this.walk = {
+            frameXStart: 0,
             frameY: 0,
             frameX: 0,
             frames: 7,
         }
-        this.walk = {
-            frameY: 0,
-            frameX: 13,
-            frames: 7,
-        }
         this.attack = {
+            frameXStart: 0,
             frameY: 0,
             frameX: 7,
             frames: 5
         }
         this.death = {
+            frameXStart: 0,
             frameY: 0,
             frameX: 20,
             frames: 9,
@@ -74,16 +73,16 @@ export default class boss extends Enemy {
 
 
 
-
         // Animation
         if (speedX !== 0) {
+            this.frameXStart = this.walk.frameXStart
             this.frameY = this.walk.frameY
             this.frameX = this.walk.frameX
             this.maxFrame = this.walk.frames
-        } else {
+        }/*  else {
             this.frameY = this.death.frameY
             this.maxFrame = this.death.frames
-        }
+        } */
 
         if (this.timer > this.interval) {
             this.frameX++
@@ -93,7 +92,7 @@ export default class boss extends Enemy {
         }
 
         if (this.frameX >= this.maxFrame) {
-            this.frameX = 0
+            this.frameX = this.frameXStart
         }
 
         this.x += speedX // move the enemy towards the player on the x axis
@@ -105,6 +104,7 @@ export default class boss extends Enemy {
             this.flip = false
         }
     }
+
 
 
     draw(context) {
@@ -131,9 +131,9 @@ export default class boss extends Enemy {
 
         // boss Debug
         if (this.game.debug) {
+            context.fillText(`Frame: ${this.frameX}`, this.x, this.y - 10);
+            context.fillText(`maxframe: ${this.maxFrame}`, this.x, this.y - 20);
             context.strokeRect(this.x, this.y, this.width, this.height)
         }
     }
 }
-
-

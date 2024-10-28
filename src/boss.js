@@ -1,13 +1,5 @@
 import Enemy from './Enemy.js'
-/* import attack1 from './assets/sprites/boss/Attack_1.png'
-import attack2 from './assets/sprites/boss/Attack2.png'
-import attack3 from './assets/sprites/boss/Attack3.png'
-import death from './assets/sprites/boss/Dead.png'
-import hurt from './assets/sprites/boss/Hurt.png'
-import idle from './assets/sprites/boss/Idle.png'
-import run from './assets/sprites/boss/Run.png' */
-import walk from './assets/sprites/boss/Walk.png'
-/* import special from './assets/sprites/boss/Special.png' */
+import walk from './assets/sprites/boss/boss.png'
 import Laugh from './assets/sounds/BossLaugh.wav'
 
 export default class boss extends Enemy {

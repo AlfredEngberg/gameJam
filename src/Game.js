@@ -82,6 +82,19 @@ export default class Game {
             this.player2.ammo += 5
           }
         }
+
+        // Boss collision
+        if (this.checkCollision(this.player, enemy) && this.bossSpawned === true) {
+          enemy.speedX = 0
+          enemy.speedY = 0
+          console.log('boss hit player 1')
+        }
+        if (this.checkCollision(this.player2, enemy) && this.bossSpawned === true) {
+          enemy.speedX = 0
+          enemy.speedY = 0
+          console.log('boss hit player 2')
+        }
+
         this.player.projectiles.forEach((projectile) => {
           if (this.checkCollision(projectile, enemy)) {
             if (enemy.lives > 1) {

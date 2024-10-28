@@ -84,6 +84,7 @@ export default class boss extends Enemy {
           }
       
           if (this.frameX >= this.maxFrame) {
+            this.sound.play()
             this.frameX = 0
           }
       

@@ -94,13 +94,11 @@ this.sound = new Audio
 
         // Boss collision
         if (this.checkCollision(this.player, enemy) && this.bossSpawned === true) {
-          enemy.speedX = 0
-          enemy.speedY = 0
+          enemy.speed = 0
           console.log('boss hit player 1')
         }
         if (this.checkCollision(this.player2, enemy) && this.bossSpawned === true) {
-          enemy.speedX = 0
-          enemy.speedY = 0
+          enemy.speed = 0
           console.log('boss hit player 2')
         }
 

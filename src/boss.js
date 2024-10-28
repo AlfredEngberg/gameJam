@@ -29,8 +29,13 @@ export default class boss extends Enemy {
             frames: 7,
         }
         this.death = {
-            frameY: 3,
-            frames: 9,
+            frameY: 0,
+            frameX: 7,
+            frames: 12,
+        }
+        this.attack = {
+            frameY: 0,
+            frames: 6,
         }
 
         // Flip sprite
@@ -65,37 +70,38 @@ export default class boss extends Enemy {
         const speedX = (dx / distance) * this.speed // calculate the x speed towards the player
         const speedY = (dy / distance) * this.speed // calculate the y speed towards the player
 
-
-
         // Animation
         if (speedX !== 0) {
             this.frameY = this.walk.frameY
             this.maxFrame = this.walk.frames
-          } else {
+        } else {
             this.frameY = this.death.frameY
             this.maxFrame = this.death.frames
-          }
-      
-          if (this.timer > this.interval) {
+        }
+
+        if (this.timer > this.interval) {
             this.frameX++
             this.timer = 0
-          } else {
+        } else {
             this.timer += deltaTime
-          }
-      
-          if (this.frameX >= this.maxFrame) {
+        }
+
+        if (this.frameX >= this.maxFrame) {
             this.sound.play()
+            this.speed = 2
             this.frameX = 0
-          }
-      
-          this.x += speedX // move the enemy towards the player on the x axis
-          this.y += speedY // move the enemy towards the player on the y axis
-      
-          if (speedX < 0) {
+        }
+
+        this.x += speedX // move the enemy towards the player on the x axis
+        this.y += speedY // move the enemy towards the player on the y axis
+
+        // flip sprite direction
+        if (this.speedX < 0) {
             this.flip = true
-          } else if (this.speedX > 0) {
+        } else if (this.speedX > 0) {
             this.flip = false
-          }
+        }
+
     }
 
 
@@ -114,8 +120,8 @@ export default class boss extends Enemy {
             this.height,
             this.flip ? this.x * -1 - this.width : this.x,
             this.y,
-            this.width * 1.5,
-            this.height * 1.5
+            this.width * 2.5,
+            this.height * 2.5
         )
 
         if (this.flip) {

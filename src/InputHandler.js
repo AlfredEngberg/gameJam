@@ -1,5 +1,6 @@
 import shootsound from './assets/sounds/Player2Shoot.wav'
 import punchsound from './assets/sounds/Player1Punch.wav'
+import selectsound from './assets/sounds/MenuSelection.wav'
 export default class InputHandler {
   constructor(game) {
     this.game = game
@@ -9,6 +10,8 @@ this.shootsound = new Audio
 this.shootsound.src = shootsound
 this.punchsound = new Audio
 this.punchsound.src = punchsound
+this.selectsound = new Audio
+this.selectsound.src = selectsound
     window.addEventListener('keydown', (event) => {
       if (
         (event.key === 'ArrowUp' ||
@@ -37,6 +40,7 @@ this.punchsound.src = punchsound
       }
 
       if (event.key === 'g') {
+        this.selectsound.play()
         this.game.viewControls = false
         this.game.viewCredits = false
         this.game.viewMainMenu = false
@@ -44,6 +48,7 @@ this.punchsound.src = punchsound
         console.log('start game')
       }
       if (event.key === 'c' && this.game.gameStart === false) {
+        this.selectsound.play()
         if (this.game.viewCredits === true) {
           this.game.viewCredits = false
         }
@@ -51,6 +56,7 @@ this.punchsound.src = punchsound
         this.game.viewMainMenu = false
       }
       if (event.key === 'v' && this.game.gameStart === false) {
+        this.selectsound.play()
         if (this.game.viewControls === true) {
           this.game.viewControls = false
         }
@@ -58,6 +64,7 @@ this.punchsound.src = punchsound
         this.game.viewMainMenu = false
       }
       if (event.key === 'b') {
+        this.selectsound.play()
         this.game.viewControls = false
         this.game.viewCredits = false
         this.game.viewMainMenu = true

@@ -1,10 +1,14 @@
+
 export default class UserInterface {
   constructor(game) {
     this.game = game
     this.fontSize = 25
     this.fontFamily = 'Arial'
     this.color = 'white'
+   
   }
+
+
 
   draw(context) {
     context.save()

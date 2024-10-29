@@ -22,11 +22,11 @@ export default class Game {
     this.enemies = []
     this.enemyTimer = 0
     this.enemyInterval = 1000
-    this.enemiesKilled = 10
+    this.enemiesKilled = 0
     this.bossSpawned = false
 
 
-this.sound = new Audio 
+    this.sound = new Audio
     this.sound.src = Stinger
 
     this.gameStart = false
@@ -41,7 +41,7 @@ this.sound = new Audio
   update(deltaTime) {
     if (!this.gameOver && this.gameStart === true) {
       this.gameTime += deltaTime
-      
+
     }
 
     if (this.gameStart === true) {
@@ -75,17 +75,16 @@ this.sound = new Audio
       this.player2.update(deltaTime)
 
       this.enemies.forEach((enemy) => {
-        
+
         enemy.update(this.player, this.player2, deltaTime)
         if (this.checkCollision(this.player, enemy) && this.bossSpawned === false) {
-          
+
           enemy.markedForDeletion = true
           if (enemy.type === 'candy') {
             this.player.ammo += 5
           }
         }
         if (this.checkCollision(this.player2, enemy) && this.bossSpawned === false) {
-          
           enemy.markedForDeletion = true
           if (enemy.type === 'candy') {
             this.player2.ammo += 5
@@ -95,11 +94,17 @@ this.sound = new Audio
         // Boss collision
         if (this.checkCollision(this.player, enemy) && this.bossSpawned === true) {
           enemy.speed = 0
-          console.log('boss hit player 1')
+          if (enemy.frameX === 12) {
+            this.player.lives -= 1
+            console.log('boss hit player 1')
+          }
         }
         if (this.checkCollision(this.player2, enemy) && this.bossSpawned === true) {
           enemy.speed = 0
-          console.log('boss hit player 2')
+          if (enemy.frameX === 12) {
+            this.player2.lives -= 1
+            console.log('boss hit player 2')
+          }
         }
 
         this.player.projectiles.forEach((projectile) => {
@@ -108,7 +113,9 @@ this.sound = new Audio
               enemy.lives -= projectile.damage
             } else {
               this.enemiesKilled++
-              enemy.markedForDeletion = true
+              if (this.bossSpawned === false) {
+                enemy.markedForDeletion = true
+              }
             }
             projectile.markedForDeletion = true
           }
@@ -130,9 +137,9 @@ this.sound = new Audio
   }
 
   checkCollision(object1, object2) {
-    
+
     return (
-      
+
       object1.x < object2.x + object2.width &&
       object1.x + object1.width > object2.x &&
       object1.y < object2.y + object2.height &&

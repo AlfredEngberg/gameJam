@@ -18,7 +18,7 @@ export default class boss extends Enemy {
         this.image = walkImage
 
         // sprite Animation
-        this.frameX = 1
+        this.frameX = 0
         this.frameY = 0
         this.maxFrame = 0
         this.fps = 20
@@ -26,16 +26,18 @@ export default class boss extends Enemy {
         this.interval = 1000 / this.fps
         this.walk = {
             frameY: 0,
+            frameX: 0,
             frames: 7,
         }
         this.death = {
             frameY: 0,
-            frameX: 7,
-            frames: 12,
+            frameX: 20,
+            frames: 29,
         }
         this.attack = {
             frameY: 0,
-            frames: 6,
+            frameX: 7,
+            frames: 13,
         }
 
         // Flip sprite
@@ -75,6 +77,11 @@ export default class boss extends Enemy {
             this.frameY = this.walk.frameY
             this.maxFrame = this.walk.frames
         } else {
+            this.frameY = this.attack.frameY
+            this.maxFrame = this.attack.frames
+        }
+        if (this.lives <= 0) {
+            this.speed = 0
             this.frameY = this.death.frameY
             this.maxFrame = this.death.frames
         }
@@ -87,6 +94,10 @@ export default class boss extends Enemy {
         }
 
         if (this.frameX >= this.maxFrame) {
+            if (this.lives <= 0) {
+                this.markedForDeletion = true
+                console.log('boss dead')
+            }
             this.sound.play()
             this.speed = 2
             this.frameX = 0
@@ -103,8 +114,6 @@ export default class boss extends Enemy {
         }
 
     }
-
-
 
     draw(context) {
         if (this.flip) {

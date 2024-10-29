@@ -35,7 +35,7 @@ export default class Player2 {
     const imageAttack = new Image();
     imageAttack.src = knightAttack;
     this.image = imageAttack;
-    const imageDeath= new Image();
+    const imageDeath = new Image();
     imageDeath.src = knightDeath;
     this.image = imageIdle;
 
@@ -119,19 +119,21 @@ export default class Player2 {
   }
 
   move() {
-    if (this.game.keys.includes("ArrowLeft")) {
+    // Movement left and right
+    if (this.game.keys.includes("a")) {
       this.speedX = -this.maxSpeed;
       this.flip = true;
-    } else if (this.game.keys.includes("ArrowRight")) {
+    } else if (this.game.keys.includes("d")) {
       this.flip = false;
       this.speedX = this.maxSpeed;
     } else {
       this.speedX = 0;
     }
 
-    if (this.game.keys.includes("ArrowUp")) {
+    // movemeny up and down
+    if (this.game.keys.includes("w")) {
       this.speedY = -this.maxSpeed;
-    } else if (this.game.keys.includes("ArrowDown")) {
+    } else if (this.game.keys.includes("s")) {
       this.speedY = this.maxSpeed;
     } else {
       this.speedY = 0;
@@ -157,7 +159,7 @@ export default class Player2 {
       this.spriteWidth,
       this.spriteHeight,
       this.flip ? this.x * -1 - this.width - 40 : this.x - 40,
-      this.y -35,
+      this.y - 35,
       this.spriteWidth,
       this.spriteHeight,
     );

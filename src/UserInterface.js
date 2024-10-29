@@ -75,7 +75,7 @@ context.fillText(
         this.game.height / 3 - 20,
       )
       context.fillText(
-        'WASD to move, Click to shoot',
+        'Arrow keys to move, Click to shoot',
         this.game.width / 2,
         this.game.height / 2 - 20,
       )
@@ -86,7 +86,7 @@ context.fillText(
         this.game.height / 1.4 - 20,
       )
       context.fillText(
-        'Arrow keys to move, Space to hit',
+        'WASD to move, Space to hit',
         this.game.width / 2,
         this.game.height / 1.2 - 20,
       )

@@ -215,7 +215,7 @@ export default class Player {
     // get angle between player and mouse
     const angle = Math.atan2(
       mouseY - (this.y + this.height / 2),
-      mouseX - (this.x + this.width / 2 - Projectile.height / 2)
+      mouseX - (this.x + this.width / 2)
     )
 
     if (this.ammo > 0) {
@@ -224,7 +224,7 @@ export default class Player {
         new Projectile(
           this.game,
           this.x + this.width / 2,
-          this.y + this.height / 2 - Projectile.height / 2,
+          this.y + this.height / 2,
           angle
         )
       )

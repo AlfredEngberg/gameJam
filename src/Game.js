@@ -118,7 +118,20 @@ this.MainMusic.play()
         }
 
         this.player.projectiles.forEach((projectile) => {
-          if (this.checkCollision(projectile, enemy)) {
+          if (this.checkProjectileCollision(projectile, enemy)) {
+            if (enemy.lives > 1) {
+              enemy.lives -= projectile.damage
+            } else {
+              this.enemiesKilled++
+              if (this.bossSpawned === false) {
+                enemy.markedForDeletion = true
+              }
+            }
+            projectile.markedForDeletion = true
+          }
+        })
+        this.player2.projectiles.forEach((projectile) => {
+          if (this.checkProjectileCollision(projectile, enemy)) {
             if (enemy.lives > 1) {
               enemy.lives -= projectile.damage
             } else {
@@ -163,6 +176,58 @@ this.Titlescreen.draw(context)
       this.enemies.forEach((enemy) => {
         enemy.draw(context)
       })
+    }
+  }
+
+  checkProjectileCollision(projectile, object) {
+    let angle = projectile.angle;
+    let dx1 = projectile.width * Math.cos(angle);
+    let dy1 = projectile.width * Math.sin(angle);
+    let dx2 = projectile.height * -Math.sin(angle);
+    let dy2 = projectile.height * Math.cos(angle);
+    let x1 = projectile.x + dx1;
+    let y1 = projectile.y + dy1;
+
+    if (
+      x1 > object.x &&
+      x1 < object.x + object.width &&
+      y1 > object.y &&
+      y1 < object.y + object.height
+    ) {
+      return true;
+    }
+
+    let x2 = x1 + dx2;
+    let y2 = y1 + dy2;
+
+    if (
+      x2 > object.x &&
+      x2 < object.x + object.width &&
+      y2 > object.y &&
+      y2 < object.y + object.height
+    ) {
+      return true;
+    }
+
+    let x3 = x2 - dx1;
+    let y3 = y2 - dy1;
+
+    if (
+      x3 > object.x &&
+      x3 < object.x + object.width &&
+      y3 > object.y &&
+      y3 < object.y + object.height
+    ) {
+      return true;
+    }
+
+    if (
+      projectile.x > object.x &&
+      projectile.x < object.x + object.width &&
+      projectile.y > object.y &&
+      projectile.y < object.y + object.height
+    ) {
+      return true;
     }
   }
 

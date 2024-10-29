@@ -1,13 +1,10 @@
 import arrowImage from './assets/sprites/bullet.png'
 
 export default class Projectile {
-  static width = 48
-  static height = 48
-
   constructor(game, x, y, angle, speed) {
     this.game = game
- /*    this.width = 48
-    this.height = 48 */
+    this.width = 48
+    this.height = 48
     this.x = x
     this.y = y
     this.angle = angle
@@ -80,8 +77,8 @@ export default class Projectile {
       this.spriteHeight,
       0,
       0,
-      Projectile.width,
-      Projectile.height,
+      this.width,
+      this.height,
     )
     if (this.game.debug) {
       context.strokeStyle = 'red'

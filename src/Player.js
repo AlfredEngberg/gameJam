@@ -1,14 +1,17 @@
 import Projectile from './Projectile.js'
 import spriteImage from './assets/sprites/playerSprite.png'
+import knightIdle from "./assets/sprites/Gangsters_1/Idle.png";
+import knightAttack from "./assets/sprites/Gangsters_1/Shot.png";
+import knightRun from "./assets/sprites/Gangsters_1/Walk.png";
+import knightDeath from "./assets/sprites/Gangsters_1/Dead.png";
 
 export default class Player {
   constructor(game) {
     this.game = game
-    this.width = 64
-    this.height = 64
+    this.width = 45
+    this.height = 95
     this.x = 30
     this.y = 100
-
 
     this.maxAmmo = 20
     this.ammo = 20
@@ -23,32 +26,47 @@ export default class Player {
     this.jumpSpeed = 45
     this.grounded = false
 
-    // adding sprite image
-    const idleImage = new Image()
-    idleImage.src = spriteImage
-    this.image = idleImage
+    // Sprite images
+    const imageIdle = new Image();
+    imageIdle.src = knightIdle;
 
-    // sprite animation
-    this.frameX = 0
-    this.frameY = 0
-    this.maxFrame = 0
-    this.animationFps = 20
-    this.animationTimer = 0
-    this.animationInterval = 1000 / this.animationFps
+    const imageRun = new Image();
+    imageRun.src = knightRun;
+
+    const imageAttack = new Image();
+    imageAttack.src = knightAttack;
+
+    const imageDeath= new Image();
+    imageDeath.src = knightDeath;
+    this.image = imageIdle;
+
+    // Sprite animation variables
+    this.frameX = 0;
+    this.frameY = 0;
+    this.maxFrame = 6;
+    this.spriteWidth = 128;
+    this.spriteHeight = 128;
+    this.animationFps = 12;
+    this.animationTimer = 0;
+    this.animationInterval = 1000 / this.animationFps;
+
+    this.state = "idle";
     this.idle = {
-      frameY: 0,
-      frames: 4,
-    }
-    this.run = {
-      frameY: 2,
-      frames: 8,
-    }
+      image: imageIdle,
+      frames: 6,
+    };
+    this.running = {
+      image: imageRun,
+      frames: 10,
+    };
     this.attack = {
-      frameY: 1,
-      frames: 11,
-    }
-
-    this.state = "idle"
+      image: imageAttack,
+      frames: 5,
+    };
+    this.death = {
+      image: imageDeath,
+      frames: 5,
+    };
 
     // flip sprite direction
     this.flip = false
@@ -62,22 +80,21 @@ export default class Player {
       this.setState("death");
       this.game.gameOver = true;
     }
-
+    
     this.move()
 
     // play run or idle animation
-    if (this.shooting) {
+    if (this.state === "shooting") {
       this.maxFrame = this.attack.frames
-      this.frameY = this.attack.frameY
+      this.image = this.attack.image
+   
       if (this.frameX === this.attack.frames - 1) {
         this.shooting = false
       }
     } else if (this.speedX !== 0) {
-      this.maxFrame = this.run.frames
-      this.frameY = this.run.frameY
+      this.setState("running")
     } else {
-      this.maxFrame = this.idle.frames
-      this.frameY = this.idle.frameY
+      this.setState("idle")
     }
 
     // projectiles
@@ -106,17 +123,25 @@ export default class Player {
     if (this.animationTimer > this.animationInterval) {
       this.frameX++
       this.animationTimer = 0
+      if (this.frameX === 2 && this.state === "shooting") {
+        this.shoot(this.game.input.mouseX, this.game.input.mouseY)
+        this.setState("idle")
+      }
     } else {
       this.animationTimer += deltaTime
     }
 
     // reset frameX when it reaches maxFrame
     if (this.frameX >= this.maxFrame) {
+      if (this.state === "shooting") {
+        this.shooting = false
+      }
       this.frameX = 0
     }
   }
 
   move() {
+    // Movement left and right
     if (this.game.keys.includes("ArrowLeft")) {
       this.speedX = -this.maxSpeed;
       this.flip = true;
@@ -127,6 +152,7 @@ export default class Player {
       this.speedX = 0;
     }
 
+    // movemeny up and down
     if (this.game.keys.includes("ArrowUp")) {
       this.speedY = -this.maxSpeed;
     } else if (this.game.keys.includes("ArrowDown")) {
@@ -145,11 +171,20 @@ export default class Player {
     })
 
     if (this.game.debug) {
-      context.strokeRect(this.x, this.y, this.width, this.height)
-      context.fillStyle = 'black'
-      context.font = '12px Arial'
-      context.fillText(this.frameX, this.x, this.y - 5)
-      context.fillText(this.grounded, this.x + 20, this.y - 5)
+      context.strokeStyle = "#000";
+      context.strokeRect(this.x, this.y, this.width, this.height);
+      context.lineWidth = 1;
+      context.beginPath();
+      const dx = this.game.input.mouseX - (this.x + this.width / 2);
+      const dy = this.game.input.mouseY - (this.y + this.height / 2);
+      const maxLength = 60;
+      const angle = Math.atan2(dy, dx);
+      const x = this.x + this.width / 2 + maxLength * Math.cos(angle);
+      const y = this.y + this.height / 2 + maxLength * Math.sin(angle);
+      context.moveTo(this.x + this.width / 2, this.y + this.height / 2);
+      context.lineTo(x, y);
+      context.stroke();
+      context.fillText(`Frame: ${this.frameX}`, this.x, this.y - 10);
     }
 
     // draw sprite image
@@ -162,26 +197,25 @@ export default class Player {
     // image, sx, sy, swidth, sheight, dx, dy, dwidth, dheight
     context.drawImage(
       this.image,
-      this.frameX * this.width,
-      this.frameY * this.height,
-      this.width,
-      this.height,
-      this.flip ? this.x * -1 - this.width : this.x,
-      this.y,
-      this.width,
-      this.height
+      this.frameX * this.spriteWidth,
+      this.frameY * this.spriteHeight,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.flip ? this.x * -1 - this.width - 40 : this.x - 40,
+      this.y - 35,
+      this.spriteWidth,
+      this.spriteHeight,
     )
 
     context.restore()
   }
-
 
   shoot(mouseX, mouseY) {
     this.shooting = true
     // get angle between player and mouse
     const angle = Math.atan2(
       mouseY - (this.y + this.height / 2),
-      mouseX - (this.x + this.width / 2)
+      mouseX - (this.x + this.width / 2 - Projectile.height / 2)
     )
 
     if (this.ammo > 0) {
@@ -190,7 +224,7 @@ export default class Player {
         new Projectile(
           this.game,
           this.x + this.width / 2,
-          this.y + this.height / 2,
+          this.y + this.height / 2 - Projectile.height / 2,
           angle
         )
       )
@@ -206,7 +240,7 @@ export default class Player {
     switch (state) {
       case "running":
         this.state = "running";
-        this.frameY = this.running.frameY;
+        this.image = this.running.image;
         this.maxFrame = this.running.frames;
         break;
       case "shooting":
@@ -216,12 +250,20 @@ export default class Player {
           break;
         }
         this.state = "shooting";
-        this.frameY = this.shooting.frameY;
-        this.maxFrame = this.shooting.frames;
+        this.shooting = true;
+        this.image = this.attack.image;
+        this.maxFrame = this.attack.frames;
         break;
+
+      case "death":
+        this.state = "death";
+        this.image = this.death.image;
+        this.maxFrame = this.death.frames;
+        break;
+
       default:
         this.state = "idle";
-        this.frameY = this.idle.frameY;
+        this.image = this.idle.image;
         this.maxFrame = this.idle.frames;
     }
     this.frameX = 0;

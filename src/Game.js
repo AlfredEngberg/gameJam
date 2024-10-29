@@ -23,7 +23,6 @@ export default class Game {
     this.gravity = 0
     this.debug = false
     this.gameTime = 0
-    this.enemies = []
     this.enemyTimer = 0
     this.enemyInterval = 1000
     this.enemiesKilled = 0
@@ -45,6 +44,8 @@ this.sound = new Audio
 
     this.player = new Player(this)
     this.player2 = new Player2(this)
+
+    this.enemyProjectiles = []
   }
 
   update(deltaTime) {
@@ -130,7 +131,18 @@ this.MainMusic.play()
           }
         })
       })
+      this.enemyProjectiles.forEach((projectile) => {
+        if (this.checkCollision(projectile, this.player)) {
+          this.player.lives -= projectile.damage
+          projectile.markedForDeletion = true
+        }
+        if (this.checkCollision(projectile, this.player2)) {
+          this.player2.lives -= projectile.damage
+          projectile.markedForDeletion = true
+        }
+      })
       this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion)
+      this.enemyProjectiles = this.enemyProjectiles.filter((projectile) => !projectile.markedForDeletion)
     }
   }
 

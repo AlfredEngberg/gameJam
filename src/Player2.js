@@ -1,15 +1,15 @@
-/* import Projectile from "./Projectile.js"; */
+import Projectile from "./Projectile.js";
 import Sword from "./Sword.js";
-import knightIdle from "./assets/sprites/knight/_Idle.png";
-import knightAttack from "./assets/sprites/knight/_Attack.png";
-import knightRun from "./assets/sprites/knight/_Run.png";
-import knightDeath from "./assets/sprites/knight/_Death.png";
+import knightIdle from "./assets/sprites/Gangsters_2/Idle.png";
+import knightAttack from "./assets/sprites/Gangsters_2/Attack_1.png";
+import knightRun from "./assets/sprites/Gangsters_2/Walk.png";
+import knightDeath from "./assets/sprites/Gangsters_2/Dead.png";
 
 export default class Player2 {
   constructor(game) {
     this.game = game;
-    this.width = 35;
-    this.height = 45;
+    this.width = 40;
+    this.height = 95;
     this.x = this.game.width / 2 - this.width / 2;
     this.y = this.game.height / 2 - this.height / 2;
 
@@ -35,7 +35,7 @@ export default class Player2 {
     const imageAttack = new Image();
     imageAttack.src = knightAttack;
     this.image = imageAttack;
-    const imageDeath = new Image();
+    const imageDeath= new Image();
     imageDeath.src = knightDeath;
     this.image = imageIdle;
 
@@ -43,9 +43,9 @@ export default class Player2 {
 
     this.frameX = 0;
     this.frameY = 0;
-    this.maxFrame = 10;
-    this.spriteWidth = 120;
-    this.spriteHeight = 80;
+    this.maxFrame = 7;
+    this.spriteWidth = 128;
+    this.spriteHeight = 128;
     this.animationFps = 12;
     this.animationTimer = 0;
     this.animationInterval = 1000 / this.animationFps;
@@ -53,7 +53,7 @@ export default class Player2 {
     this.state = "idle";
     this.idle = {
       image: imageIdle,
-      frames: 10,
+      frames: 7,
     };
     this.running = {
       image: imageRun,
@@ -61,7 +61,7 @@ export default class Player2 {
     };
     this.shooting = {
       image: imageAttack,
-      frames: 4,
+      frames: 6,
     };
     this.death = {
       image: imageDeath,
@@ -88,11 +88,14 @@ export default class Player2 {
     if (this.animationTimer > this.animationInterval) {
       this.animationTimer = 0;
       this.frameX++;
-      if (this.frameX === 1 && this.state === "shooting") {
+      if (this.frameX === 3 && this.state === "shooting") {
         this.shoot(this.game.input.mouseX, this.game.input.mouseY);
+        console.log(this.projectiles);
       }
       if (this.frameX >= (this.maxFrame)) {
         if (this.state === "shooting") {
+          this.projectiles.pop();
+          console.log(this.projectiles);
           this.setState("idle");
         }
         this.frameX = 0;
@@ -119,7 +122,6 @@ export default class Player2 {
   }
 
   move() {
-    // Movement left and right
     if (this.game.keys.includes("a")) {
       this.speedX = -this.maxSpeed;
       this.flip = true;
@@ -130,7 +132,6 @@ export default class Player2 {
       this.speedX = 0;
     }
 
-    // movemeny up and down
     if (this.game.keys.includes("w")) {
       this.speedY = -this.maxSpeed;
     } else if (this.game.keys.includes("s")) {
@@ -198,11 +199,6 @@ export default class Player2 {
         this.maxFrame = this.running.frames;
         break;
       case "shooting":
-        if (this.ammo <= 0) {
-          console.log("out of ammo");
-          this.setState("idle");
-          break;
-        }
         this.state = "shooting";
         this.image = this.shooting.image;
         this.maxFrame = this.shooting.frames;

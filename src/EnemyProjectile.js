@@ -1,38 +1,30 @@
-import arrowImage from './assets/sprites/bullet.png'
+import blobImage from './assets/sprites/maggot/AcidBlob.png'
 
 export default class Projectile {
-  static width = 48
-  static height = 48
-
   constructor(game, x, y, angle, speed) {
     this.game = game
- /*    this.width = 48
-    this.height = 48 */
+    this.width = 32
+    this.height = 32
     this.x = x
     this.y = y
     this.angle = angle
 
-    this.speed = speed || 400
-    if (speed >= 0) {
-      this.speed = speed
-    }
-
+    this.speed = speed || 200
     this.damage = 1
     this.markedForDeletion = false
 
     // Arrow sprite image
     const image = new Image()
-    image.src = arrowImage
+    image.src = blobImage
     this.image = image
-    this.spriteWidth = 16
-    this.spriteHeight = 16
 
     // Sprite animation variables
-    this.frameX = 0
-    this.maxFrame = 4
-    this.fps = 8
+    this.maxFrame = 7
+    this.fps = 20
     this.timer = 0
     this.interval = 1000 / this.fps
+    this.frameX = 0
+    this.frameY = Math.floor(Math.random() * 4)
 
     // Flip sprite
     this.flip = false
@@ -48,22 +40,22 @@ export default class Projectile {
     this.y += velocity.y * (deltaTime / 1000)
 
     if (
-        this.x > this.game.width || 
-        this.x + this.width < 0 || 
-        this.y > this.game.height || 
-        this.y + this.height < 0
+      this.x > this.game.width || 
+      this.x + this.width < 0 || 
+      this.y > this.game.height || 
+      this.y + this.height < 0
       ) {
       this.markedForDeletion = true
     }
-
     if (this.timer > this.interval) {
       this.frameX++
       this.timer = 0
-      if (this.frameX >= this.maxFrame) {
-        this.frameX = 0
-      }
     } else {
       this.timer += deltaTime
+    }
+
+    if (this.frameX >= this.maxFrame) {
+      this.frameX = 0
     }
   }
 
@@ -74,20 +66,20 @@ export default class Projectile {
     context.rotate(this.angle)
     context.drawImage(
       this.image,
-      176 + this.frameX * this.spriteWidth,
-      16,
-      this.spriteWidth,
-      this.spriteHeight,
+      this.frameX * this.width,
+      this.frameY * this.height,
+      this.width,
+      this.height,
       0,
       0,
-      Projectile.width,
-      Projectile.height,
+      this.width,
+      this.height,
     )
     if (this.game.debug) {
-      context.strokeStyle = 'red'
+      context.fillStyle = "black"
       context.strokeRect(0, 0, this.width, this.height)
-      this.fillStyle = 'black'
-      context.fillText(`FrameX: ${this.frameX}`, 0, -10)
+      context.fillText(`x: ${this.x.toFixed(2)}, y: ${this.y.toFixed(2)}`, 0, 0)
+      context.fillText(`frameX: ${this.frameX}`, 0, -20)
     }
     context.restore()
   }

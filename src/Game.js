@@ -88,15 +88,18 @@ export default class Game {
 
         enemy.update(this.player, this.player2, deltaTime)
         if (this.checkCollision(this.player, enemy) && this.bossSpawned === false) {
-
           enemy.markedForDeletion = true
+          this.player.lives -= 1
           if (enemy.type === 'candy') {
+            this.player.lives += 1
             this.player.ammo += 5
           }
         }
         if (this.checkCollision(this.player2, enemy) && this.bossSpawned === false) {
           enemy.markedForDeletion = true
+          this.player2.lives -= 1
           if (enemy.type === 'candy') {
+            this.player2.lives += 1
             this.player2.ammo += 5
           }
         }
@@ -119,7 +122,7 @@ export default class Game {
 
         this.player.projectiles.forEach((projectile) => {
           if (this.checkProjectileCollision(projectile, enemy)) {
-            if (enemy.lives > 0) {
+            if (enemy.lives >= 1) {
               enemy.lives -= projectile.damage
             } else {
               this.enemiesKilled++
@@ -132,7 +135,7 @@ export default class Game {
         })
         this.player2.projectiles.forEach((projectile) => {
           if (this.checkProjectileCollision(projectile, enemy)) {
-            if (enemy.lives > 1) {
+            if (enemy.lives >= 1) {
               enemy.lives -= projectile.damage
             } else {
               this.enemiesKilled++

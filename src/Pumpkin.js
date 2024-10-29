@@ -9,7 +9,7 @@ export default class Pumpkin extends Enemy {
     this.x = x
     this.y = y
     this.speed = 2
-    this.lives = Math.floor(Math.random() * 1) + 1
+    this.lives = 1
     this.color = 'orange'
 
     // Zombie Walk Image

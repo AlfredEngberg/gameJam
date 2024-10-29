@@ -26,3 +26,8 @@
   width: min(80ch, 100vw - 2rem);
   margin-inline: auto;
 }
+
+@font-face {
+  font-family: bugFont;
+  src: url(FatPix-SVG.ttf);
+}

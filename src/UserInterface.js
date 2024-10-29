@@ -3,9 +3,9 @@ export default class UserInterface {
   constructor(game) {
     this.game = game
     this.fontSize = 25
-    this.fontFamily = 'Arial'
+    this.fontFamily = 'arial'
     this.color = 'white'
-   
+   this.bugfont= 'bugFont'
   }
 
 
@@ -31,6 +31,17 @@ export default class UserInterface {
       context.textAlign = 'center'
       context.font = `50px ${this.fontFamily}`
       context.strokeRect(this.game.width / 2.6 - 150, this.game.height / 3, 500, 100)
+      this.fontFamily='bugFont'
+       this.color='lightgreen'
+context.fillText(
+  
+  'BUGS',
+  
+  this.game.width / 2,
+  this.game.height / 2.8 - 20
+)
+
+
       context.fillText(
         'Press "G" to start!',
         this.game.width / 2,

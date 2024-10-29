@@ -7,6 +7,7 @@ import boss from './boss.js'
 import Candy from './Candy.js'
 import Stinger from './assets/sounds/Stinger.wav'
 import Background from './Background.js'
+import Titlescreen from './Titlescreen.js'
 export default class Game {
   constructor(width, height, canvasPosition) {
     this.width = width
@@ -25,7 +26,7 @@ export default class Game {
     this.enemyInterval = 1000
     this.enemiesKilled = 10
     this.bossSpawned = false
-
+this.Titlescreen = new Titlescreen(this)
 this.background = new Background(this)
 this.sound = new Audio 
     this.sound.src = Stinger
@@ -120,7 +121,11 @@ this.sound = new Audio
   }
 
   draw(context) {
-    this.ui.draw(context)
+   if(this.gameStart!==true){
+this.Titlescreen.draw(context)
+}
+
+ this.ui.draw(context)
     if (this.gameStart === true) {
       this.background.draw(context)
       this.ui.draw(context)

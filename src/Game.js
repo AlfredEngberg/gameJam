@@ -6,6 +6,7 @@ import Pumpkin from './Pumpkin.js'
 import boss from './boss.js'
 import Candy from './Candy.js'
 import Stinger from './assets/sounds/Stinger.wav'
+import Background from './Background.js'
 export default class Game {
   constructor(width, height, canvasPosition) {
     this.width = width
@@ -25,8 +26,8 @@ export default class Game {
     this.enemiesKilled = 0
     this.bossSpawned = false
 
-
-    this.sound = new Audio
+this.background = new Background(this)
+this.sound = new Audio 
     this.sound.src = Stinger
 
     this.gameStart = false
@@ -128,6 +129,8 @@ export default class Game {
   draw(context) {
     this.ui.draw(context)
     if (this.gameStart === true) {
+      this.background.draw(context)
+      this.ui.draw(context)
       this.player.draw(context)
       this.player2.draw(context)
       this.enemies.forEach((enemy) => {

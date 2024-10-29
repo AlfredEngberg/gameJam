@@ -8,6 +8,7 @@ import Candy from './Candy.js'
 import Stinger from './assets/sounds/Stinger.wav'
 import Background from './Background.js'
 import Titlescreen from './Titlescreen.js'
+import MainMusic from './assets/sounds/MainMusic.ogg'
 export default class Game {
   constructor(width, height, canvasPosition) {
     this.width = width
@@ -31,6 +32,9 @@ this.background = new Background(this)
 this.sound = new Audio 
     this.sound.src = Stinger
 
+
+    this.MainMusic = new Audio
+    this.MainMusic.src = MainMusic
     this.gameStart = false
     this.viewMainMenu = true
     this.viewControls = false
@@ -43,7 +47,7 @@ this.sound = new Audio
   update(deltaTime) {
     if (!this.gameOver && this.gameStart === true) {
       this.gameTime += deltaTime
-
+this.MainMusic.play()
     }
 
     if (this.gameStart === true) {

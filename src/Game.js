@@ -9,6 +9,7 @@ import Stinger from './assets/sounds/Stinger.wav'
 import Background from './Background.js'
 import Titlescreen from './Titlescreen.js'
 import MainMusic from './assets/sounds/MainMusic.ogg'
+import MenuMusic from './assets/sounds/MenuMusic.ogg'
 export default class Game {
   constructor(width, height, canvasPosition) {
     this.width = width
@@ -35,6 +36,8 @@ this.sound = new Audio
 
     this.MainMusic = new Audio
     this.MainMusic.src = MainMusic
+    this.MenuMusic = new Audio
+    this.MenuMusic.src = MenuMusic
     this.gameStart = false
     this.viewMainMenu = true
     this.viewControls = false
@@ -133,11 +136,14 @@ this.MainMusic.play()
 
   draw(context) {
    if(this.gameStart!==true){
+    this.MenuMusic.play()
+ 
 this.Titlescreen.draw(context)
 }
 
  this.ui.draw(context)
     if (this.gameStart === true) {
+         this.MenuMusic.pause()
       this.background.draw(context)
       this.ui.draw(context)
       this.player.draw(context)

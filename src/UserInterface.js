@@ -30,12 +30,12 @@ export default class UserInterface {
     if (this.game.gameStart === false && this.game.viewMainMenu === true) {
       context.textAlign = 'center'
       context.font = `50px ${this.fontFamily}`
-      context.strokeRect(this.game.width / 2.6 - 150, this.game.height / 3, 500, 100)
+      
       this.fontFamily='bugFont'
        this.color='lightgreen'
 context.fillText(
   
-  'BUGS',
+  'BUGS VS GANGSTERS',
   
   this.game.width / 2,
   this.game.height / 2.8 - 20

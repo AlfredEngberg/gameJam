@@ -123,6 +123,7 @@ this.sound = new Audio
     this.ui.draw(context)
     if (this.gameStart === true) {
       this.background.draw(context)
+      this.ui.draw(context)
       this.player.draw(context)
       this.player2.draw(context)
       this.enemies.forEach((enemy) => {

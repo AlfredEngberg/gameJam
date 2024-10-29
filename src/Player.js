@@ -15,6 +15,7 @@ export default class Player {
     this.ammoTimer = 0
     this.ammoInterval = 5000
     this.projectiles = []
+    this.lives = 10
 
     this.speedX = 0
     this.speedY = 0
@@ -61,7 +62,7 @@ export default class Player {
       this.setState("death");
       this.game.gameOver = true;
     }
-    
+
     this.move()
 
     // play run or idle animation
@@ -116,21 +117,19 @@ export default class Player {
   }
 
   move() {
-    // Movement left and right
-    if (this.game.keys.includes("a")) {
+    if (this.game.keys.includes("ArrowLeft")) {
       this.speedX = -this.maxSpeed;
       this.flip = true;
-    } else if (this.game.keys.includes("d")) {
+    } else if (this.game.keys.includes("ArrowRight")) {
       this.flip = false;
       this.speedX = this.maxSpeed;
     } else {
       this.speedX = 0;
     }
 
-    // movemeny up and down
-    if (this.game.keys.includes("w")) {
+    if (this.game.keys.includes("ArrowUp")) {
       this.speedY = -this.maxSpeed;
-    } else if (this.game.keys.includes("s")) {
+    } else if (this.game.keys.includes("ArrowDown")) {
       this.speedY = this.maxSpeed;
     } else {
       this.speedY = 0;

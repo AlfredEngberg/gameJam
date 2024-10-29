@@ -27,9 +27,9 @@ export default class Game {
     this.enemyInterval = 1000
     this.enemiesKilled = 0
     this.bossSpawned = false
-this.Titlescreen = new Titlescreen(this)
-this.background = new Background(this)
-this.sound = new Audio 
+    this.Titlescreen = new Titlescreen(this)
+    this.background = new Background(this)
+    this.sound = new Audio
     this.sound.src = Stinger
 
 
@@ -51,7 +51,7 @@ this.sound = new Audio
   update(deltaTime) {
     if (!this.gameOver && this.gameStart === true) {
       this.gameTime += deltaTime
-this.MainMusic.play()
+      this.MainMusic.play()
     }
 
     if (this.gameStart === true) {
@@ -119,7 +119,7 @@ this.MainMusic.play()
 
         this.player.projectiles.forEach((projectile) => {
           if (this.checkProjectileCollision(projectile, enemy)) {
-            if (enemy.lives > 1) {
+            if (enemy.lives > 0) {
               enemy.lives -= projectile.damage
             } else {
               this.enemiesKilled++
@@ -160,15 +160,15 @@ this.MainMusic.play()
   }
 
   draw(context) {
-   if(this.gameStart!==true){
-    this.MenuMusic.play()
- 
-this.Titlescreen.draw(context)
-}
+    if (this.gameStart !== true) {
+      this.MenuMusic.play()
 
- this.ui.draw(context)
+      this.Titlescreen.draw(context)
+    }
+
+    this.ui.draw(context)
     if (this.gameStart === true) {
-         this.MenuMusic.pause()
+      this.MenuMusic.pause()
       this.background.draw(context)
       this.ui.draw(context)
       this.player.draw(context)

@@ -30,6 +30,7 @@ export default class Game {
     this.enemyInterval = 1000
     this.enemiesKilled = 0
     this.bossSpawned = false
+    this.gameWin = false
     this.Titlescreen = new Titlescreen(this)
     this.background = new Background(this)
     this.sound = new Audio
@@ -61,7 +62,7 @@ export default class Game {
       this.MainMusic.play()
     }
 
-    if (this.gameStart === true) {
+    if (this.gameStart === true && this.gameOver === false) {
       if (this.enemiesKilled === 10 && this.bossSpawned === false) {
         this.enemies.push(new boss(this, 200, 100))
         this.sound.play();
@@ -165,7 +166,7 @@ export default class Game {
           }
         })
         this.player2.projectiles.forEach((projectile) => {
-          if (this.checkProjectileCollision(projectile, enemy)) {
+          if (this.checkCollision(projectile, enemy)) {
             if (enemy.lives >= 1) {
               enemy.lives -= projectile.damage
             } else {
@@ -179,6 +180,7 @@ export default class Game {
         })
       })
       this.enemyProjectiles.forEach((projectile) => {
+        projectile.update(deltaTime)
         if (this.checkCollision(projectile, this.player)) {
           this.HealthBar.frameX++
           this.player.lives -= projectile.damage
@@ -203,11 +205,11 @@ export default class Game {
     }
 
     this.ui.draw(context)
-    if (this.gameStart === true) {
-      
-      this.MenuMusic.pause()
+    if (this.gameStart === true && this.gameOver !== true) {
       this.background.draw(context)
-     
+
+      this.MenuMusic.pause()
+
       this.ui.draw(context)
       this.player.draw(context)
       this.player2.draw(context)
@@ -215,6 +217,9 @@ export default class Game {
       this.HealthBarP2.draw(context)
       this.enemies.forEach((enemy) => {
         enemy.draw(context)
+      })
+      this.enemyProjectiles.forEach((projectile) => {
+        projectile.draw(context)
       })
     }
   }

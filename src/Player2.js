@@ -35,7 +35,7 @@ export default class Player2 {
     const imageAttack = new Image();
     imageAttack.src = knightAttack;
     this.image = imageAttack;
-    const imageDeath= new Image();
+    const imageDeath = new Image();
     imageDeath.src = knightDeath;
     this.image = imageIdle;
 
@@ -145,42 +145,44 @@ export default class Player2 {
   }
 
   draw(context) {
-    this.projectiles.forEach((projectile) => {
-      projectile.draw(context);
-    });
+    if (this.game.gameOver !== true) {
+      this.projectiles.forEach((projectile) => {
+        projectile.draw(context);
+      });
 
-    if (this.flip) {
-      context.save();
-      context.scale(-1, 1);
-    }
-    context.drawImage(
-      this.image,
-      this.frameX * this.spriteWidth,
-      this.frameY * this.spriteHeight,
-      this.spriteWidth,
-      this.spriteHeight,
-      this.flip ? this.x * -1 - this.width - 40 : this.x - 40,
-      this.y - 35,
-      this.spriteWidth,
-      this.spriteHeight,
-    );
-    context.restore();
+      if (this.flip) {
+        context.save();
+        context.scale(-1, 1);
+      }
+      context.drawImage(
+        this.image,
+        this.frameX * this.spriteWidth,
+        this.frameY * this.spriteHeight,
+        this.spriteWidth,
+        this.spriteHeight,
+        this.flip ? this.x * -1 - this.width - 40 : this.x - 40,
+        this.y - 35,
+        this.spriteWidth,
+        this.spriteHeight,
+      );
+      context.restore();
 
-    if (this.game.debug) {
-      context.strokeStyle = "#000";
-      context.strokeRect(this.x, this.y, this.width, this.height);
-      context.lineWidth = 1;
-      context.beginPath();
-      const dx = this.game.input.mouseX - (this.x + this.width / 2);
-      const dy = this.game.input.mouseY - (this.y + this.height / 2);
-      const maxLength = 60;
-      const angle = Math.atan2(dy, dx);
-      const x = this.x + this.width / 2 + maxLength * Math.cos(angle);
-      const y = this.y + this.height / 2 + maxLength * Math.sin(angle);
-      context.moveTo(this.x + this.width / 2, this.y + this.height / 2);
-      context.lineTo(x, y);
-      context.stroke();
-      context.fillText(`Frame: ${this.frameX}`, this.x, this.y - 10);
+      if (this.game.debug) {
+        context.strokeStyle = "#000";
+        context.strokeRect(this.x, this.y, this.width, this.height);
+        context.lineWidth = 1;
+        context.beginPath();
+        const dx = this.game.input.mouseX - (this.x + this.width / 2);
+        const dy = this.game.input.mouseY - (this.y + this.height / 2);
+        const maxLength = 60;
+        const angle = Math.atan2(dy, dx);
+        const x = this.x + this.width / 2 + maxLength * Math.cos(angle);
+        const y = this.y + this.height / 2 + maxLength * Math.sin(angle);
+        context.moveTo(this.x + this.width / 2, this.y + this.height / 2);
+        context.lineTo(x, y);
+        context.stroke();
+        context.fillText(`Frame: ${this.frameX}`, this.x, this.y - 10);
+      }
     }
   }
 
@@ -217,3 +219,4 @@ export default class Player2 {
     this.frameX = 0;
   }
 }
+

@@ -18,7 +18,7 @@ export default class Player {
     this.ammoTimer = 0
     this.ammoInterval = 5000
     this.projectiles = []
-    this.lives = 10
+    this.lives = 7
 
     this.speedX = 0
     this.speedY = 0

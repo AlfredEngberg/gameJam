@@ -1,13 +1,13 @@
 import HealthMeter from './assets/sprites/HealthBar.png'
 import Game from './Game'
 import Player from './Player'
-export default class HealthBar{
+export default class HealthBarP2{
     constructor(game, color) {
       this.player= new Player(this)
         this.game=game
         this.width = 48
         this.height = 20
-        this.x = 200
+        this.x = 400
         this.y = 10
     this.color=color
     

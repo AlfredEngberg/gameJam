@@ -12,6 +12,7 @@ import Titlescreen from './Titlescreen.js'
 import MainMusic from './assets/sounds/MainMusic.ogg'
 import MenuMusic from './assets/sounds/MenuMusic.ogg'
 import HealthBar from './HealthBar.js'
+import HealthBarP2 from './HealthBarP2.js'
 export default class Game {
   constructor(width, height, canvasPosition) {
     this.width = width
@@ -35,6 +36,7 @@ export default class Game {
     this.sound.src = Stinger
 
     this.HealthBar= new HealthBar(this)
+    this.HealthBarP2= new HealthBarP2(this)
 
     this.MainMusic = new Audio
     this.MainMusic.src = MainMusic
@@ -53,6 +55,7 @@ export default class Game {
 
   update(deltaTime) {
     this.HealthBar.update(deltaTime)
+    this.HealthBarP2.update(deltaTime)
     if (!this.gameOver && this.gameStart === true) {
       this.gameTime += deltaTime
       this.MainMusic.play()
@@ -77,11 +80,11 @@ export default class Game {
           x = Math.random() * this.width // if on bottom edge, randomize x position
         }
         if (Math.random() > 0.5) {
-          this.enemies.push(new Pumpkin(this, x, y))
+           this.enemies.push(new Pumpkin(this, x, y)) 
         } else if (Math.random() < 0.3) {
           this.enemies.push(new Candy(this, x, y))
         } else if (Math.random() < 0.4) {
-          this.enemies.push(new RangedEnemy(this, x, y))
+           this.enemies.push(new RangedEnemy(this, x, y)) 
         }
         this.enemyTimer = 0
       } else {
@@ -94,13 +97,19 @@ export default class Game {
 
         enemy.update(this.player, this.player2, deltaTime)
         if (this.checkCollision(this.player, enemy)) {
+          
           if (enemy.type !== 'boss') {
             enemy.markedForDeletion = true
           }
           if (enemy.type === 'mantis') {
+            if(this.HealthBar.frameX>=0){
+            this.HealthBar.frameX++}
             this.player.lives -= 1
           }
           if (enemy.type === 'candy') {
+            if(this.HealthBar.frameX!==0){
+            this.HealthBar.frameX--
+          }
             this.player.lives += 1
             this.player.ammo += 5
           }
@@ -111,9 +120,14 @@ export default class Game {
             enemy.markedForDeletion = true
           }
           if (enemy.type === 'mantis') {
+            if(this.HealthBarP2.frameX>=0){
+              this.HealthBarP2.frameX++}
             this.player2.lives -= 1
           }
           if (enemy.type === 'candy') {
+            if(this.HealthBarP2.frameX!==0){
+              this.HealthBarP2.frameX--
+            }
             this.player2.lives += 1
             this.player2.ammo += 5
           }
@@ -123,6 +137,7 @@ export default class Game {
         if (this.checkCollision(this.player, enemy) && this.bossSpawned === true) {
           enemy.speed = 0
           if (enemy.frameX === 12) {
+            this.HealthBar.frameX++
             this.player.lives -= 1
             console.log('boss hit player 1')
           }
@@ -130,6 +145,7 @@ export default class Game {
         if (this.checkCollision(this.player2, enemy) && this.bossSpawned === true) {
           enemy.speed = 0
           if (enemy.frameX === 12) {
+            this.HealthBarP2.frameX++
             this.player2.lives -= 1
             console.log('boss hit player 2')
           }
@@ -164,10 +180,12 @@ export default class Game {
       })
       this.enemyProjectiles.forEach((projectile) => {
         if (this.checkCollision(projectile, this.player)) {
+          this.HealthBar.frameX++
           this.player.lives -= projectile.damage
           projectile.markedForDeletion = true
         }
         if (this.checkCollision(projectile, this.player2)) {
+          this.HealthBarP2.frameX++
           this.player2.lives -= projectile.damage
           projectile.markedForDeletion = true
         }
@@ -194,6 +212,7 @@ export default class Game {
       this.player.draw(context)
       this.player2.draw(context)
        this.HealthBar.draw(context)
+      this.HealthBarP2.draw(context)
       this.enemies.forEach((enemy) => {
         enemy.draw(context)
       })

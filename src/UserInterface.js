@@ -20,7 +20,8 @@ export default class UserInterface {
     if (this.game.gameStart === true) {
       context.textAlign = 'left'
       context.font = `${this.fontSize}px ${this.fontFamily}`
-      context.fillText(`Lives: ${this.game.player.lives}`, 20, 30)
+      context.fillText(`P1 Lives: ${this.game.player.lives}`, 20, 30)
+      context.fillText(`P2 Lives: ${this.game.player2.lives}`, 20, 150)
       context.fillText(`Ammo: ${this.game.player.ammo}`, 20, 60)
       context.fillText(`Time: ${(this.game.gameTime * 0.001).toFixed(1)}`, 20, 90)
       context.fillText(`Enemies killed: ${this.game.enemiesKilled}`, 20, 120)

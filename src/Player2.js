@@ -24,7 +24,7 @@ export default class Player2 {
     this.ammoTimer = 0;
     this.ammoInterval = 500;
 
-    this.lives = 10;
+    this.lives = 7;
 
     const imageIdle = new Image();
     imageIdle.src = knightIdle;

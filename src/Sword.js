@@ -8,14 +8,14 @@ export default class Sword {
         this.height = this.game.player2.height + 10
         this.angle = 0
         this.markedForDeletion = false
-        this.damage = 3
+        this.damage = 1
     }
 
     update() {}
 
     draw(context) {
         context.fillStyle = '#ff0'
-        context.fillRect(this.x, this.y, this.width, this.height)
+      //  context.fillRect(this.x, this.y, this.width, this.height)
         if (this.game.debug) {
             context.strokeRect(this.x, this.y, this.width, this.height)
         }

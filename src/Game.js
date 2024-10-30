@@ -180,7 +180,6 @@ export default class Game {
                 enemy.markedForDeletion = true
               }
             }
-            projectile.markedForDeletion = true
           }
         })
       })
@@ -205,17 +204,14 @@ export default class Game {
   draw(context) {
     if (this.gameStart !== true) {
       this.MenuMusic.play()
-
       this.Titlescreen.draw(context)
     }
 
-    this.ui.draw(context)
-    if (this.gameStart === true && this.gameOver !== true) {
+    if (this.gameStart === true && this.gameOver !== true  && this.gameWin !== true) {
       this.background.draw(context)
 
       this.MenuMusic.pause()
 
-      this.ui.draw(context)
       this.player.draw(context)
       this.player2.draw(context)
       this.HealthBar.draw(context)
@@ -227,6 +223,7 @@ export default class Game {
         projectile.draw(context)
       })
     }
+    this.ui.draw(context)
   }
 
   checkProjectileCollision(projectile, object) {

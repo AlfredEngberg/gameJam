@@ -106,6 +106,10 @@ export default class RangedEnemy extends Enemy {
     } else {
       this.flip = true
     }
+
+    if (this.lives <= 0) {
+      this.markedForDeletion = true
+    }
   }
 
   shoot(x, y) {

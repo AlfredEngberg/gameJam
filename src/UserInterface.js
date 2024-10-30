@@ -5,7 +5,7 @@ export default class UserInterface {
     this.fontSize = 25
     this.fontFamily = 'arial'
     this.color = 'white'
-   this.bugfont= 'bugFont'
+    this.bugfont = 'bugFont'
   }
 
 
@@ -17,30 +17,30 @@ export default class UserInterface {
     context.shadowOffsetY = 2
     context.shadowColor = 'black'
 
-    if (this.game.gameStart === true) {
+    if (this.game.gameStart === true && this.game.gameOver === false && this.game.gameWin === false) {
       context.textAlign = 'left'
-      context.font = `${this.fontSize}px ${this.fontFamily}`
+      context.font = `${this.fontSize}px ${this.fontFamily}`/* 
       context.fillText(`P1 Lives: ${this.game.player.lives}`, 20, 30)
-      context.fillText(`P2 Lives: ${this.game.player2.lives}`, 20, 150)
-      context.fillText(`Ammo: ${this.game.player.ammo}`, 20, 60)
+      context.fillText(`P2 Lives: ${this.game.player2.lives}`, 20, 150) */
+      context.fillText(`Ammo: ${this.game.player.ammo}`, 20, 60)/* 
       context.fillText(`Time: ${(this.game.gameTime * 0.001).toFixed(1)}`, 20, 90)
-      context.fillText(`Enemies killed: ${this.game.enemiesKilled}`, 20, 120)
+      context.fillText(`Enemies killed: ${this.game.enemiesKilled}`, 20, 120) */
     }
 
     // Main menu
     if (this.game.gameStart === false && this.game.viewMainMenu === true) {
       context.textAlign = 'center'
       context.font = `50px ${this.fontFamily}`
-      
-      this.fontFamily='bugFont'
-       this.color='lightgreen'
-context.fillText(
-  
-  'BUGS VS GANGSTERS',
-  
-  this.game.width / 2,
-  this.game.height / 2.8 - 20
-)
+
+      this.fontFamily = 'bugFont'
+      this.color = 'lightgreen'
+      context.fillText(
+
+        'BUGS VS GANGSTERS',
+
+        this.game.width / 2,
+        this.game.height / 2.8 - 20
+      )
 
 
       context.fillText(
@@ -69,7 +69,7 @@ context.fillText(
     if (this.game.viewControls === true && this.game.viewCredits === false) {
       context.textAlign = 'center'
       context.font = `50px ${this.fontFamily}`
-// Player 1
+      // Player 1
       context.fillText(
         'Player 1:',
         this.game.width / 2,
@@ -80,7 +80,7 @@ context.fillText(
         this.game.width / 2,
         this.game.height / 2 - 20,
       )
-// Player 2
+      // Player 2
       context.fillText(
         'Player 2:',
         this.game.width / 2,
@@ -91,7 +91,7 @@ context.fillText(
         this.game.width / 2,
         this.game.height / 1.2 - 20,
       )
-// Back
+      // Back
       context.fillText(
         'press "B" to go back',
         this.game.width / 2,
@@ -205,6 +205,22 @@ this.game.width  -140,
         'Game over',
         this.game.width / 2,
         this.game.height / 2 - 20
+      )
+    }
+
+    if (this.game.gameWin === true) {
+      console.log('game win')
+      context.textAlign = 'center'
+      context.font = `50px ${this.fontFamily}`
+      context.fillText(
+        'You Win!',
+        this.game.width / 2,
+        this.game.height / 2 - 20
+      )
+      context.fillText(
+        'Thanks for playing!',
+        this.game.width / 2,
+        this.game.height / 1.5 - 20
       )
     }
 

@@ -11,7 +11,7 @@ export default class boss extends Enemy {
         this.y = y
         this.speed = 2
         this.type = 'boss'
-        this.lives = 15
+        this.lives = 25
 
         // boss Walk Image
         const walkImage = new Image()
@@ -97,9 +97,10 @@ export default class boss extends Enemy {
         if (this.frameX >= this.maxFrame) {
             if (this.lives <= 0) {
                 this.markedForDeletion = true
-                this.game.gameWon = true
+                this.game.gameWin = true
                 console.log('boss dead')
                 console.log('game won')
+                
             }
             this.sound.play()
             this.speed = 2

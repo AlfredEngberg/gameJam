@@ -36,7 +36,7 @@ export default class Player {
     const imageAttack = new Image();
     imageAttack.src = knightAttack;
 
-    const imageDeath= new Image();
+    const imageDeath = new Image();
     imageDeath.src = knightDeath;
     this.image = imageIdle;
 
@@ -80,14 +80,14 @@ export default class Player {
       this.setState("death");
       this.game.gameOver = true;
     }
-    
+
     this.move()
 
     // play run or idle animation
     if (this.state === "shooting") {
       this.maxFrame = this.attack.frames
       this.image = this.attack.image
-   
+
       if (this.frameX === this.attack.frames - 1) {
         this.shooting = false
       }
@@ -166,48 +166,50 @@ export default class Player {
   }
 
   draw(context) {
-    this.projectiles.forEach((projectile) => {
-      projectile.draw(context)
-    })
+    if (this.game.gameOver !== true) {
+      this.projectiles.forEach((projectile) => {
+        projectile.draw(context)
+      })
 
-    if (this.game.debug) {
-      context.strokeStyle = "#000";
-      context.strokeRect(this.x, this.y, this.width, this.height);
-      context.lineWidth = 1;
-      context.beginPath();
-      const dx = this.game.input.mouseX - (this.x + this.width / 2);
-      const dy = this.game.input.mouseY - (this.y + this.height / 2);
-      const maxLength = 60;
-      const angle = Math.atan2(dy, dx);
-      const x = this.x + this.width / 2 + maxLength * Math.cos(angle);
-      const y = this.y + this.height / 2 + maxLength * Math.sin(angle);
-      context.moveTo(this.x + this.width / 2, this.y + this.height / 2);
-      context.lineTo(x, y);
-      context.stroke();
-      context.fillText(`Frame: ${this.frameX}`, this.x, this.y - 10);
+      if (this.game.debug) {
+        context.strokeStyle = "#000";
+        context.strokeRect(this.x, this.y, this.width, this.height);
+        context.lineWidth = 1;
+        context.beginPath();
+        const dx = this.game.input.mouseX - (this.x + this.width / 2);
+        const dy = this.game.input.mouseY - (this.y + this.height / 2);
+        const maxLength = 60;
+        const angle = Math.atan2(dy, dx);
+        const x = this.x + this.width / 2 + maxLength * Math.cos(angle);
+        const y = this.y + this.height / 2 + maxLength * Math.sin(angle);
+        context.moveTo(this.x + this.width / 2, this.y + this.height / 2);
+        context.lineTo(x, y);
+        context.stroke();
+        context.fillText(`Frame: ${this.frameX}`, this.x, this.y - 10);
+      }
+
+      // draw sprite image
+      if (this.flip) {
+        context.save()
+        context.scale(-1, 1)
+      }
+
+      // s = source, d = destination
+      // image, sx, sy, swidth, sheight, dx, dy, dwidth, dheight
+      context.drawImage(
+        this.image,
+        this.frameX * this.spriteWidth,
+        this.frameY * this.spriteHeight,
+        this.spriteWidth,
+        this.spriteHeight,
+        this.flip ? this.x * -1 - this.width - 40 : this.x - 40,
+        this.y - 35,
+        this.spriteWidth,
+        this.spriteHeight,
+      )
+
+      context.restore()
     }
-
-    // draw sprite image
-    if (this.flip) {
-      context.save()
-      context.scale(-1, 1)
-    }
-
-    // s = source, d = destination
-    // image, sx, sy, swidth, sheight, dx, dy, dwidth, dheight
-    context.drawImage(
-      this.image,
-      this.frameX * this.spriteWidth,
-      this.frameY * this.spriteHeight,
-      this.spriteWidth,
-      this.spriteHeight,
-      this.flip ? this.x * -1 - this.width - 40 : this.x - 40,
-      this.y - 35,
-      this.spriteWidth,
-      this.spriteHeight,
-    )
-
-    context.restore()
   }
 
   shoot(mouseX, mouseY) {
@@ -230,7 +232,7 @@ export default class Player {
         new Projectile(
           this.game,
           this.x + this.width / 2,
-          dx < 0 ? this.y + this.height / 2 + 24: this.y + this.height / 2 - 24,
+          dx < 0 ? this.y + this.height / 2 + 24 : this.y + this.height / 2 - 24,
           angle
         )
       )
@@ -274,5 +276,5 @@ export default class Player {
     }
     this.frameX = 0;
   }
-
 }
+

@@ -8,7 +8,7 @@ export default class Sword {
         this.height = this.game.player2.height + 10
         this.angle = 0
         this.markedForDeletion = false
-        this.damage = 3
+        this.damage = 5
     }
 
     update() {}

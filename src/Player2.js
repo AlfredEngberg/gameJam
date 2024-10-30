@@ -142,6 +142,20 @@ export default class Player2 {
 
     this.y += this.speedY;
     this.x += this.speedX;
+    
+    // keep player within canvas
+    if (this.y < 0) {
+      this.y = 0
+    }
+    if (this.y > this.game.height - this.height) {
+      this.y = this.game.height - this.height
+    }
+    if (this.x < 0) {
+      this.x = 0
+    }
+    if (this.x > this.game.width - this.width) {
+      this.x = this.game.width - this.width
+    }
   }
 
   draw(context) {

@@ -83,6 +83,9 @@ export default class Pumpkin extends Enemy {
     } else if (this.speedX > 0) {
       this.flip = false
     }
+    if (this.lives <= 0) {
+      this.markedForDeletion = true
+    }
   }
 
 

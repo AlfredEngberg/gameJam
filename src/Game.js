@@ -180,7 +180,6 @@ export default class Game {
                 enemy.markedForDeletion = true
               }
             }
-            projectile.markedForDeletion = true
           }
         })
       })

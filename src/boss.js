@@ -11,7 +11,7 @@ export default class boss extends Enemy {
         this.y = y
         this.speed = 2
         this.type = 'boss'
-        this.lives = 15
+        this.lives = 25
 
         // boss Walk Image
         const walkImage = new Image()

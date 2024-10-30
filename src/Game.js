@@ -36,8 +36,8 @@ export default class Game {
     this.sound = new Audio
     this.sound.src = Stinger
 
-    this.HealthBar= new HealthBar(this)
-    this.HealthBarP2= new HealthBarP2(this)
+    this.HealthBar = new HealthBar(this)
+    this.HealthBarP2 = new HealthBarP2(this)
 
     this.MainMusic = new Audio
     this.MainMusic.src = MainMusic
@@ -64,6 +64,9 @@ export default class Game {
 
     if (this.gameStart === true && this.gameOver === false) {
       if (this.enemiesKilled === 10 && this.bossSpawned === false) {
+        for (let i = 0; i < this.enemies.length; i++) {
+          this.enemies[i].markedForDeletion = true
+        }
         this.enemies.push(new boss(this, 200, 100))
         this.sound.play();
         this.bossSpawned = true
@@ -81,11 +84,11 @@ export default class Game {
           x = Math.random() * this.width // if on bottom edge, randomize x position
         }
         if (Math.random() > 0.5) {
-           this.enemies.push(new Pumpkin(this, x, y)) 
+          this.enemies.push(new Pumpkin(this, x, y))
         } else if (Math.random() < 0.3) {
           this.enemies.push(new Candy(this, x, y))
         } else if (Math.random() < 0.4) {
-           this.enemies.push(new RangedEnemy(this, x, y)) 
+          this.enemies.push(new RangedEnemy(this, x, y))
         }
         this.enemyTimer = 0
       } else {
@@ -98,19 +101,20 @@ export default class Game {
 
         enemy.update(this.player, this.player2, deltaTime)
         if (this.checkCollision(this.player, enemy)) {
-          
+
           if (enemy.type !== 'boss') {
             enemy.markedForDeletion = true
           }
           if (enemy.type === 'mantis') {
-            if(this.HealthBar.frameX>=0){
-            this.HealthBar.frameX++}
+            if (this.HealthBar.frameX >= 0) {
+              this.HealthBar.frameX++
+            }
             this.player.lives -= 1
           }
           if (enemy.type === 'candy') {
-            if(this.HealthBar.frameX!==0){
-            this.HealthBar.frameX--
-          }
+            if (this.HealthBar.frameX !== 0) {
+              this.HealthBar.frameX--
+            }
             this.player.lives += 1
             this.player.ammo += 5
           }
@@ -121,12 +125,13 @@ export default class Game {
             enemy.markedForDeletion = true
           }
           if (enemy.type === 'mantis') {
-            if(this.HealthBarP2.frameX>=0){
-              this.HealthBarP2.frameX++}
+            if (this.HealthBarP2.frameX >= 0) {
+              this.HealthBarP2.frameX++
+            }
             this.player2.lives -= 1
           }
           if (enemy.type === 'candy') {
-            if(this.HealthBarP2.frameX!==0){
+            if (this.HealthBarP2.frameX !== 0) {
               this.HealthBarP2.frameX--
             }
             this.player2.lives += 1
@@ -213,7 +218,7 @@ export default class Game {
       this.ui.draw(context)
       this.player.draw(context)
       this.player2.draw(context)
-       this.HealthBar.draw(context)
+      this.HealthBar.draw(context)
       this.HealthBarP2.draw(context)
       this.enemies.forEach((enemy) => {
         enemy.draw(context)

@@ -15,7 +15,7 @@ export default class Sword {
 
     draw(context) {
         context.fillStyle = '#ff0'
-        context.fillRect(this.x, this.y, this.width, this.height)
+      //  context.fillRect(this.x, this.y, this.width, this.height)
         if (this.game.debug) {
             context.strokeRect(this.x, this.y, this.width, this.height)
         }

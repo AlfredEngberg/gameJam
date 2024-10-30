@@ -126,74 +126,74 @@ export default class UserInterface {
       )
       context.fillText(
         'Sound made by:',
-        this.game.width  -410,
-                this.game.height / 5 - 20,
-              )
-
-              context.fillText(
-                'davidkbd',
-                this.game.width  -410,
-                        this.game.height / 3.4 - 20,
-                      )
-                      context.fillText(
-                        'Daniel SoundsGood',
-                        this.game.width  -410,
-                                this.game.height / 2.7 - 20,
-                              )
-                              context.fillText(
-                                'JDWasabi',
-                                this.game.width  -410,
-                                        this.game.height / 2.2 - 20,
-                                      )
-                                      context.fillText(
-                                        'YourPalRob',
-                                        this.game.width  -410,
-                                                this.game.height / 1.9 - 20,
-                                              )
-                                              context.fillText(
-                                                'SnakeF8',
-                                                this.game.width  -410,
-                                                        this.game.height / 1.7 - 20,
-                                                      )
-                
+        this.game.width - 410,
+        this.game.height / 5 - 20,
+      )
 
       context.fillText(
-'Sprites made by:',
-this.game.width  -140,
+        'davidkbd',
+        this.game.width - 410,
+        this.game.height / 3.4 - 20,
+      )
+      context.fillText(
+        'Daniel SoundsGood',
+        this.game.width - 410,
+        this.game.height / 2.7 - 20,
+      )
+      context.fillText(
+        'JDWasabi',
+        this.game.width - 410,
+        this.game.height / 2.2 - 20,
+      )
+      context.fillText(
+        'YourPalRob',
+        this.game.width - 410,
+        this.game.height / 1.9 - 20,
+      )
+      context.fillText(
+        'SnakeF8',
+        this.game.width - 410,
+        this.game.height / 1.7 - 20,
+      )
+
+
+      context.fillText(
+        'Sprites made by:',
+        this.game.width - 140,
         this.game.height / 5 - 20,
       )
 
       context.fillText(
         'Admurin',
-        this.game.width  -140,
-                this.game.height / 3.4 - 20,
-              )
+        this.game.width - 140,
+        this.game.height / 3.4 - 20,
+      )
 
-              context.fillText(
-                'Lil-Cthulhu',
-                this.game.width  -140,
-                        this.game.height / 2.7 - 20,
-                      )
-                      context.fillText(
-                        'Chesire',
-                        this.game.width  -140,
-                                this.game.height / 2.2- 20,
-                              )
-                              context.fillText(
-                                'CraftPix',
-                                this.game.width  -140,
-                                        this.game.height / 1.9- 20,
-                                      )
-                                      context.fillText(
-                                        'BDragon1727',
-                                        this.game.width  -140,
-                                                this.game.height / 1.7- 20,
-                                              )
+      context.fillText(
+        'Lil-Cthulhu',
+        this.game.width - 140,
+        this.game.height / 2.7 - 20,
+      )
+      context.fillText(
+        'Chesire',
+        this.game.width - 140,
+        this.game.height / 2.2 - 20,
+      )
+      context.fillText(
+        'CraftPix',
+        this.game.width - 140,
+        this.game.height / 1.9 - 20,
+      )
+      context.fillText(
+        'BDragon1727',
+        this.game.width - 140,
+        this.game.height / 1.7 - 20,
+      )
 
       context.fillText(
         'press "B" to go back',
         this.game.width / 2,
-        this.game.height / 1.2 
+        this.game.height / 1.2
       )
     }
 

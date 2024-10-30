@@ -149,7 +149,7 @@ export default class Game {
           }
         })
         this.player2.projectiles.forEach((projectile) => {
-          if (this.checkProjectileCollision(projectile, enemy)) {
+          if (this.checkCollision(projectile, enemy)) {
             if (enemy.lives >= 1) {
               enemy.lives -= projectile.damage
             } else {

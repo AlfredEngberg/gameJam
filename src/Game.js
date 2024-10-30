@@ -3,6 +3,7 @@ import Player from './Player.js'
 import Player2 from './Player2.js'
 import UserInterface from './UserInterface.js'
 import Pumpkin from './Pumpkin.js'
+import RangedEnemy from './RangedEnemy.js'
 import boss from './boss.js'
 import Candy from './Candy.js'
 import Stinger from './assets/sounds/Stinger.wav'
@@ -28,9 +29,9 @@ export default class Game {
     this.enemyInterval = 1000
     this.enemiesKilled = 0
     this.bossSpawned = false
-this.Titlescreen = new Titlescreen(this)
-this.background = new Background(this)
-this.sound = new Audio 
+    this.Titlescreen = new Titlescreen(this)
+    this.background = new Background(this)
+    this.sound = new Audio
     this.sound.src = Stinger
 
     this.HealthBar= new HealthBar(this)
@@ -54,11 +55,16 @@ this.sound = new Audio
     this.HealthBar.update(deltaTime)
     if (!this.gameOver && this.gameStart === true) {
       this.gameTime += deltaTime
-this.MainMusic.play()
+      this.MainMusic.play()
     }
 
     if (this.gameStart === true) {
-      if (this.enemyTimer > this.enemyInterval && this.enemiesKilled < 10) {
+      if (this.enemiesKilled === 10 && this.bossSpawned === false) {
+        this.enemies.push(new boss(this, 200, 100))
+        this.sound.play();
+        this.bossSpawned = true
+        console.log('boss spawned')
+      } else if (this.enemyTimer > this.enemyInterval && this.enemiesKilled < 10) {
         let x = Math.random() < 0.5 ? 0 : this.width // spawn on left or right edge
         let y = Math.random() < 0.5 ? 0 : this.height // spawn on top or bottom edge
         if (x === 0) {
@@ -70,17 +76,14 @@ this.MainMusic.play()
         } else {
           x = Math.random() * this.width // if on bottom edge, randomize x position
         }
-        if (Math.random() < 0.2) {
-          this.enemies.push(new Candy(this, x, y))
-        } else {
+        if (Math.random() > 0.5) {
           this.enemies.push(new Pumpkin(this, x, y))
+        } else if (Math.random() < 0.3) {
+          this.enemies.push(new Candy(this, x, y))
+        } else if (Math.random() < 0.4) {
+          this.enemies.push(new RangedEnemy(this, x, y))
         }
         this.enemyTimer = 0
-      } else if (this.enemiesKilled === 10 && this.bossSpawned === false) {
-        this.enemies.push(new boss(this, 200, 100))
-        this.sound.play();
-        this.bossSpawned = true
-        console.log('boss spawned')
       } else {
         this.enemyTimer += deltaTime
       }
@@ -90,16 +93,28 @@ this.MainMusic.play()
       this.enemies.forEach((enemy) => {
 
         enemy.update(this.player, this.player2, deltaTime)
-        if (this.checkCollision(this.player, enemy) && this.bossSpawned === false) {
-
-          enemy.markedForDeletion = true
+        if (this.checkCollision(this.player, enemy)) {
+          if (enemy.type !== 'boss') {
+            enemy.markedForDeletion = true
+          }
+          if (enemy.type === 'mantis') {
+            this.player.lives -= 1
+          }
           if (enemy.type === 'candy') {
+            this.player.lives += 1
             this.player.ammo += 5
           }
         }
-        if (this.checkCollision(this.player2, enemy) && this.bossSpawned === false) {
-          enemy.markedForDeletion = true
+
+        if (this.checkCollision(this.player2, enemy)) {
+          if (enemy.type !== 'boss') {
+            enemy.markedForDeletion = true
+          }
+          if (enemy.type === 'mantis') {
+            this.player2.lives -= 1
+          }
           if (enemy.type === 'candy') {
+            this.player2.lives += 1
             this.player2.ammo += 5
           }
         }
@@ -122,7 +137,7 @@ this.MainMusic.play()
 
         this.player.projectiles.forEach((projectile) => {
           if (this.checkProjectileCollision(projectile, enemy)) {
-            if (enemy.lives > 1) {
+            if (enemy.lives >= 1) {
               enemy.lives -= projectile.damage
             } else {
               this.enemiesKilled++
@@ -135,7 +150,7 @@ this.MainMusic.play()
         })
         this.player2.projectiles.forEach((projectile) => {
           if (this.checkProjectileCollision(projectile, enemy)) {
-            if (enemy.lives > 1) {
+            if (enemy.lives >= 1) {
               enemy.lives -= projectile.damage
             } else {
               this.enemiesKilled++
@@ -163,16 +178,16 @@ this.MainMusic.play()
   }
 
   draw(context) {
-   if(this.gameStart!==true){
-    this.MenuMusic.play()
- 
-this.Titlescreen.draw(context)
-}
+    if (this.gameStart !== true) {
+      this.MenuMusic.play()
 
- this.ui.draw(context)
+      this.Titlescreen.draw(context)
+    }
+
+    this.ui.draw(context)
     if (this.gameStart === true) {
       
-         this.MenuMusic.pause()
+      this.MenuMusic.pause()
       this.background.draw(context)
      
       this.ui.draw(context)

@@ -10,7 +10,8 @@ export default class boss extends Enemy {
         this.x = x
         this.y = y
         this.speed = 2
-        this.lives = 20
+        this.type = 'boss'
+        this.lives = 15
 
         // boss Walk Image
         const walkImage = new Image()
@@ -139,6 +140,7 @@ export default class boss extends Enemy {
 
         // boss Debug
         if (this.game.debug) {
+            context.fillText(`Lives: ${this.lives}`, this.x, this.y - 30);
             context.fillText(`Frame: ${this.frameX}`, this.x, this.y - 10);
             context.fillText(`maxframe: ${this.maxFrame}`, this.x, this.y - 20);
             context.strokeRect(this.x, this.y, this.width, this.height)

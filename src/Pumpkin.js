@@ -1,5 +1,5 @@
 import Enemy from './Enemy.js'
-import zombieImage from './assets/sprites/zombie_spritesheet.png'
+import mantisImage from './assets/sprites/mantis/MantisMove.png'
 
 export default class Pumpkin extends Enemy {
   constructor(game, x, y) {
@@ -9,12 +9,12 @@ export default class Pumpkin extends Enemy {
     this.x = x
     this.y = y
     this.speed = 2
-    this.lives = Math.floor(Math.random() * 1) + 1
-    this.color = 'orange'
+    this.lives = 1
+    this.type = 'mantis'
 
     // Zombie Walk Image
     const image = new Image()
-    image.src = zombieImage
+    image.src = mantisImage
     this.image = image
 
     // sprite Animation
@@ -26,11 +26,7 @@ export default class Pumpkin extends Enemy {
     this.interval = 1000 / this.fps
     this.walk = {
       frameY: 1,
-      frames: 8,
-    }
-    this.death = {
-      frameY: 3,
-      frames: 9,
+      frames: 4,
     }
 
     // Flip sprite
@@ -59,10 +55,7 @@ export default class Pumpkin extends Enemy {
     const speedX = (dx / distance) * this.speed // calculate the x speed towards the player
     const speedY = (dy / distance) * this.speed // calculate the y speed towards the player
 
-
-
-
-    // Zombie Animation
+    // Mantis Animation
     if (speedX !== 0) {
       this.frameY = this.walk.frameY
       this.maxFrame = this.walk.frames

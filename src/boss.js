@@ -97,7 +97,9 @@ export default class boss extends Enemy {
         if (this.frameX >= this.maxFrame) {
             if (this.lives <= 0) {
                 this.markedForDeletion = true
+                this.game.gameWon = true
                 console.log('boss dead')
+                console.log('game won')
             }
             this.sound.play()
             this.speed = 2

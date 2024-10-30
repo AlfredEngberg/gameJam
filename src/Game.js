@@ -29,6 +29,7 @@ export default class Game {
     this.enemyInterval = 1000
     this.enemiesKilled = 0
     this.bossSpawned = false
+    this.gameWin = false
     this.Titlescreen = new Titlescreen(this)
     this.background = new Background(this)
     this.sound = new Audio

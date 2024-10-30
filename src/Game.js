@@ -3,6 +3,7 @@ import Player from './Player.js'
 import Player2 from './Player2.js'
 import UserInterface from './UserInterface.js'
 import Pumpkin from './Pumpkin.js'
+import RangedEnemy from './RangedEnemy.js'
 import boss from './boss.js'
 import Candy from './Candy.js'
 import Stinger from './assets/sounds/Stinger.wav'
@@ -55,7 +56,12 @@ export default class Game {
     }
 
     if (this.gameStart === true) {
-      if (this.enemyTimer > this.enemyInterval && this.enemiesKilled < 10) {
+      if (this.enemiesKilled === 10 && this.bossSpawned === false) {
+        this.enemies.push(new boss(this, 200, 100))
+        this.sound.play();
+        this.bossSpawned = true
+        console.log('boss spawned')
+      } else if (this.enemyTimer > this.enemyInterval && this.enemiesKilled < 10) {
         let x = Math.random() < 0.5 ? 0 : this.width // spawn on left or right edge
         let y = Math.random() < 0.5 ? 0 : this.height // spawn on top or bottom edge
         if (x === 0) {
@@ -67,17 +73,14 @@ export default class Game {
         } else {
           x = Math.random() * this.width // if on bottom edge, randomize x position
         }
-        if (Math.random() < 0.2) {
-          this.enemies.push(new Candy(this, x, y))
-        } else {
+        if (Math.random() > 0.5) {
           this.enemies.push(new Pumpkin(this, x, y))
+        } else if (Math.random() < 0.3) {
+          this.enemies.push(new Candy(this, x, y))
+        } else if (Math.random() < 0.4) {
+          this.enemies.push(new RangedEnemy(this, x, y))
         }
         this.enemyTimer = 0
-      } else if (this.enemiesKilled === 10 && this.bossSpawned === false) {
-        this.enemies.push(new boss(this, 200, 100))
-        this.sound.play();
-        this.bossSpawned = true
-        console.log('boss spawned')
       } else {
         this.enemyTimer += deltaTime
       }

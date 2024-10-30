@@ -138,22 +138,22 @@ export default class UserInterface {
                       context.fillText(
                         'Daniel SoundsGood',
                         this.game.width  -410,
-                                this.game.height / 2.8 - 20,
+                                this.game.height / 2.7 - 20,
                               )
                               context.fillText(
                                 'JDWasabi',
                                 this.game.width  -410,
-                                        this.game.height / 2.4 - 20,
+                                        this.game.height / 2.2 - 20,
                                       )
                                       context.fillText(
                                         'YourPalRob',
                                         this.game.width  -410,
-                                                this.game.height / 2.1 - 20,
+                                                this.game.height / 1.9 - 20,
                                               )
                                               context.fillText(
                                                 'SnakeF8',
                                                 this.game.width  -410,
-                                                        this.game.height / 1.9 - 20,
+                                                        this.game.height / 1.7 - 20,
                                                       )
                 
 
@@ -172,22 +172,22 @@ this.game.width  -140,
               context.fillText(
                 'Lil-Cthulhu',
                 this.game.width  -140,
-                        this.game.height / 2.8 - 20,
+                        this.game.height / 2.7 - 20,
                       )
                       context.fillText(
                         'Chesire',
                         this.game.width  -140,
-                                this.game.height / 2.4- 20,
+                                this.game.height / 2.2- 20,
                               )
                               context.fillText(
                                 'CraftPix',
                                 this.game.width  -140,
-                                        this.game.height / 2.1- 20,
+                                        this.game.height / 1.9- 20,
                                       )
                                       context.fillText(
                                         'BDragon1727',
                                         this.game.width  -140,
-                                                this.game.height / 1.9- 20,
+                                                this.game.height / 1.7- 20,
                                               )
 
       context.fillText(

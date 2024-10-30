@@ -10,6 +10,7 @@ import Background from './Background.js'
 import Titlescreen from './Titlescreen.js'
 import MainMusic from './assets/sounds/MainMusic.ogg'
 import MenuMusic from './assets/sounds/MenuMusic.ogg'
+import HealthBar from './HealthBar.js'
 export default class Game {
   constructor(width, height, canvasPosition) {
     this.width = width
@@ -32,6 +33,7 @@ this.background = new Background(this)
 this.sound = new Audio 
     this.sound.src = Stinger
 
+    this.HealthBar= new HealthBar(this)
 
     this.MainMusic = new Audio
     this.MainMusic.src = MainMusic
@@ -49,6 +51,7 @@ this.sound = new Audio
   }
 
   update(deltaTime) {
+    this.HealthBar.update(deltaTime)
     if (!this.gameOver && this.gameStart === true) {
       this.gameTime += deltaTime
 this.MainMusic.play()
@@ -168,11 +171,14 @@ this.Titlescreen.draw(context)
 
  this.ui.draw(context)
     if (this.gameStart === true) {
+      
          this.MenuMusic.pause()
       this.background.draw(context)
+     
       this.ui.draw(context)
       this.player.draw(context)
       this.player2.draw(context)
+       this.HealthBar.draw(context)
       this.enemies.forEach((enemy) => {
         enemy.draw(context)
       })

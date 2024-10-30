@@ -163,6 +163,7 @@ export default class Game {
         })
       })
       this.enemyProjectiles.forEach((projectile) => {
+        projectile.update(deltaTime)
         if (this.checkCollision(projectile, this.player)) {
           this.player.lives -= projectile.damage
           projectile.markedForDeletion = true
@@ -196,6 +197,9 @@ export default class Game {
        this.HealthBar.draw(context)
       this.enemies.forEach((enemy) => {
         enemy.draw(context)
+      })
+      this.enemyProjectiles.forEach((projectile) => {
+        projectile.draw(context)
       })
     }
   }

@@ -52,14 +52,17 @@ export default class RangedEnemy extends Enemy {
     let dx;
     let dy;
     let distance;
+    let target;
     if (distance1 < distance2) {
       dx = dx1;
       dy = dy1;
       distance = distance1;
+      target = player
     } else {
       dx = dx2;
       dy = dy2;
       distance = distance2;
+      target = player2
     }
     const speedX = (dx / distance) * this.speed // calculate the x speed towards the player
     const speedY = (dy / distance) * this.speed // calculate the y speed towards the player
@@ -67,7 +70,8 @@ export default class RangedEnemy extends Enemy {
     this.shootTimer += deltaTime
 
     if (distance < 150 && this.shootTimer > this.shootInterval) {
-      this.shoot(player.x, player.y)
+      console.log('shoot')
+      this.shoot(target.x, target.y)
       this.shootTimer = 0
     }
 

@@ -59,9 +59,6 @@ export default class Pumpkin extends Enemy {
     if (speedX !== 0) {
       this.frameY = this.walk.frameY
       this.maxFrame = this.walk.frames
-    } else {
-      this.frameY = this.death.frameY
-      this.maxFrame = this.death.frames
     }
 
     if (this.timer > this.interval) {

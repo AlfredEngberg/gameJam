@@ -13,6 +13,7 @@ import MainMusic from './assets/sounds/MainMusic.ogg'
 import MenuMusic from './assets/sounds/MenuMusic.ogg'
 import HealthBar from './HealthBar.js'
 import HealthBarP2 from './HealthBarP2.js'
+import GameOverScreen from './GameOverScreen.js'
 export default class Game {
   constructor(width, height, canvasPosition) {
     this.width = width
@@ -38,7 +39,7 @@ export default class Game {
 
     this.HealthBar = new HealthBar(this)
     this.HealthBarP2 = new HealthBarP2(this)
-
+    this.GameOverScreen= new GameOverScreen(this) 
     this.MainMusic = new Audio
     this.MainMusic.src = MainMusic
     this.MenuMusic = new Audio
@@ -55,6 +56,7 @@ export default class Game {
   }
 
   update(deltaTime) {
+    this.GameOverScreen.update(deltaTime)
     this.HealthBar.update(deltaTime)
     this.HealthBarP2.update(deltaTime)
     if (!this.gameOver && this.gameStart === true) {
@@ -62,6 +64,7 @@ export default class Game {
       this.MainMusic.play()
     }
 
+    
     if (this.gameStart === true && this.gameOver === false) {
       if (this.enemiesKilled === 10 && this.bossSpawned === false) {
         for (let i = 0; i < this.enemies.length; i++) {
@@ -202,6 +205,11 @@ export default class Game {
   }
 
   draw(context) {
+
+    if(this.gameOver===true){
+      this.GameOverScreen.draw(context)
+    }
+
     if (this.gameStart !== true) {
       this.MenuMusic.play()
       this.Titlescreen.draw(context)

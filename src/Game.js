@@ -3,6 +3,7 @@ import Player from './Player.js'
 import Player2 from './Player2.js'
 import UserInterface from './UserInterface.js'
 import Pumpkin from './Pumpkin.js'
+import Beetle from './Beetle.js'
 import RangedEnemy from './RangedEnemy.js'
 import boss from './boss.js'
 import Candy from './Candy.js'
@@ -88,11 +89,13 @@ export default class Game {
           x = Math.random() * this.width // if on bottom edge, randomize x position
         }
         if (Math.random() > 0.5) {
-           this.enemies.push(new Pumpkin(this, x, y)) 
+            this.enemies.push(new Pumpkin(this, x, y))  
         } else if (Math.random() < 0.3) {
-          this.enemies.push(new Candy(this, x, y))
+           this.enemies.push(new Candy(this, x, y)) 
         } else if (Math.random() < 0.4) {
-           this.enemies.push(new RangedEnemy(this, x, y)) 
+            this.enemies.push(new RangedEnemy(this, x, y))  
+        } else if(Math.random()< 0.2){
+          this.enemies.push(new Beetle(this, x, y)) 
         }
         this.enemyTimer = 0
       } else {
@@ -109,7 +112,7 @@ export default class Game {
           if (enemy.type !== 'boss') {
             enemy.markedForDeletion = true
           }
-          if (enemy.type === 'mantis') {
+          if (enemy.type === 'mantis' || enemy.type === 'beetle') {
             if (this.HealthBar.frameX >= 0) {
               this.HealthBar.frameX++
             }
@@ -128,7 +131,7 @@ export default class Game {
           if (enemy.type !== 'boss') {
             enemy.markedForDeletion = true
           }
-          if (enemy.type === 'mantis') {
+          if (enemy.type === 'mantis'||enemy.type === 'beetle' ) {
             if (this.HealthBarP2.frameX >= 0) {
               this.HealthBarP2.frameX++
             }

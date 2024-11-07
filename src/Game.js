@@ -14,6 +14,7 @@ import MenuMusic from './assets/sounds/MenuMusic.ogg'
 import HealthBar from './HealthBar.js'
 import HealthBarP2 from './HealthBarP2.js'
 import GameOverScreen from './GameOverScreen.js'
+import WinScreen from './WinScreen.js'
 export default class Game {
   constructor(width, height, canvasPosition) {
     this.width = width
@@ -36,7 +37,7 @@ export default class Game {
     this.background = new Background(this)
     this.sound = new Audio
     this.sound.src = Stinger
-
+ this.WinScreen= new WinScreen(this)
     this.HealthBar = new HealthBar(this)
     this.HealthBarP2 = new HealthBarP2(this)
     this.GameOverScreen= new GameOverScreen(this) 
@@ -214,7 +215,9 @@ export default class Game {
       this.MenuMusic.play()
       this.Titlescreen.draw(context)
     }
-
+if(this.gameWin===true){
+  this.WinScreen.draw(context)
+}
     if (this.gameStart === true && this.gameOver !== true  && this.gameWin !== true) {
       this.background.draw(context)
 

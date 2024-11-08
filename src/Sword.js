@@ -12,7 +12,7 @@ export default class Sword {
     }
 
     update(deltaTime) {
-        if(this.game.player2.powerState===true){
+        if(this.game.player2.powerStateP2===true){
             console.log("swordcheck")
          this.x+=5
           

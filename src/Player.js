@@ -50,6 +50,12 @@ export default class Player {
     this.animationTimer = 0;
     this.animationInterval = 1000 / this.animationFps;
 
+    this.powerTimer = 0
+    this.powerTimeLimit = 100000
+    this.powerState = false
+
+
+
     this.state = "idle";
     this.idle = {
       image: imageIdle,
@@ -76,6 +82,19 @@ export default class Player {
   }
 
   update(deltaTime) {
+
+    if (this.powerTimer < this.powerTimeLimit && this.powerState === true) {
+      console.log("super mode is on P1")
+      this.powerTimer += deltaTime
+    } else {
+      console.log("super mode is off P1")
+      this.powerState = false
+      this.powerTimer = 0
+
+    }
+   
+
+
     if (this.lives <= 0 && this.state !== "death") {
       this.setState("death");
       this.game.gameOver = true;

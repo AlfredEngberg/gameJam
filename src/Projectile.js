@@ -36,6 +36,14 @@ export default class Projectile {
   }
 
   update(deltaTime) {
+
+    if(this.game.player.powerState===true){
+      
+      this.damage=3
+    }else{
+      this.damage=1
+    }
+
     const velocity = {
       x: this.speed * Math.cos(this.angle),
       y: this.speed * Math.sin(this.angle),

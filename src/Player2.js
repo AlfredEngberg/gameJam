@@ -39,9 +39,9 @@ export default class Player2 {
     imageDeath.src = knightDeath;
     this.image = imageIdle;
 
-    this.powerTimer = 0
-    this.powerTimeLimit = 6000000
-    this.powerState = false
+    this.powerTimerP2 = 0
+    this.powerTimeLimitP2 = 6000000
+    this.powerStateP2 = false
 
     this.images = [imageIdle, imageRun, imageAttack, imageDeath];
 
@@ -75,16 +75,16 @@ export default class Player2 {
 
   update(deltaTime) {
 
-    if (this.powerTimer < this.powerTimeLimit && this.powerState === true) {
-      console.log("super mode is on")
-      this.powerTimer += deltaTime
+    if (this.powerTimerP2 < this.powerTimeLimitP2 && this.powerStateP2 === true) {
+      
+      this.powerTimerP2 += deltaTime
     } else {
-      console.log("super mode is off")
-      this.powerState = false
-      this.powerTimer = 0
+      
+      this.powerStateP2 = false
+      this.powerTimerP2 = 0
 
     }
-    if (this.powerState === true) {
+    if (this.powerStateP2 === true) {
       this.height = 150
 
     }

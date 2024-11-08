@@ -39,6 +39,10 @@ export default class Player2 {
     imageDeath.src = knightDeath;
     this.image = imageIdle;
 
+    this.powerTimer = 0
+    this.powerTimeLimit = 6000000
+    this.powerState = false
+
     this.images = [imageIdle, imageRun, imageAttack, imageDeath];
 
     this.frameX = 0;
@@ -70,6 +74,21 @@ export default class Player2 {
   }
 
   update(deltaTime) {
+
+    if (this.powerTimer < this.powerTimeLimit && this.powerState === true) {
+      console.log("super mode is on")
+      this.powerTimer += deltaTime
+    } else {
+      console.log("super mode is off")
+      this.powerState = false
+      this.powerTimer = 0
+
+    }
+    if (this.powerState === true) {
+      this.height = 150
+
+    }
+
     if (this.lives <= 0 && this.state !== "death") {
       this.setState("death");
       this.game.gameOver = true;
@@ -142,7 +161,7 @@ export default class Player2 {
 
     this.y += this.speedY;
     this.x += this.speedX;
-    
+
     // keep player within canvas
     if (this.y < 0) {
       this.y = 0
@@ -159,6 +178,28 @@ export default class Player2 {
   }
 
   draw(context) {
+    if (this.powerState === true) {
+
+      if (this.flip) {
+        context.save();
+        context.scale(-1, 1);
+      }
+
+      context.drawImage(
+        this.image,
+        this.frameX * this.spriteWidth,
+        this.frameY * this.spriteHeight,
+        this.spriteWidth,
+        this.spriteHeight,
+        this.flip ? this.x * -1 - this.width - 40 : this.x - 40,
+        this.y + 20,
+        this.spriteWidth,
+        this.spriteHeight,
+      );
+
+      context.restore();
+    }
+
     if (this.game.gameOver !== true) {
       this.projectiles.forEach((projectile) => {
         projectile.draw(context);
@@ -175,7 +216,7 @@ export default class Player2 {
         this.spriteWidth,
         this.spriteHeight,
         this.flip ? this.x * -1 - this.width - 40 : this.x - 40,
-        this.y - 35,
+        this.y - 55,
         this.spriteWidth,
         this.spriteHeight,
       );
@@ -201,6 +242,7 @@ export default class Player2 {
   }
 
   shoot(mouseX, mouseY) {
+
     this.projectiles.push(new Sword(this.game, this.x, this.y, this.flip));
   }
 

@@ -8,7 +8,7 @@ export default class Projectile {
     this.x = x
     this.y = y
     this.angle = angle
-
+this.poweredBullet = 0
     this.speed = speed || 400
     if (speed >= 0) {
       this.speed = speed
@@ -38,10 +38,11 @@ export default class Projectile {
   update(deltaTime) {
 
     if(this.game.player.powerState===true){
-      
+      this.poweredBullet=108
       this.damage=3
     }else{
       this.damage=1
+      this.poweredBullet=0
     }
 
     const velocity = {
@@ -80,7 +81,7 @@ export default class Projectile {
     context.drawImage(
       this.image,
       176 + this.frameX * this.spriteWidth,
-      16,
+      16 + this.poweredBullet,
       this.spriteWidth,
       this.spriteHeight,
       0,

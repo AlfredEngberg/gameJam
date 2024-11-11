@@ -1,6 +1,7 @@
 import Enemy from './Enemy.js'
 import EnemyProjectile from './EnemyProjectile.js'
-import mantisImage from './assets/sprites/maggot/MaggotWalk.png'
+import walkImage from './assets/sprites/maggot/MaggotWalk.png'
+import hurt from './assets/sprites/maggot/MaggotHurt.png'
 
 export default class RangedEnemy extends Enemy {
   constructor(game, x, y) {
@@ -13,10 +14,16 @@ export default class RangedEnemy extends Enemy {
     this.lives = Math.floor(Math.random() * 1) + 1
     this.color = 'green'
 
-    // Zombie Walk Image
+    //  Walk Image
     const image = new Image()
-    image.src = mantisImage
+    image.src = walkImage
+    this.walkImage = walkImage
     this.image = image
+
+    // Hurt Image
+    const hurtImage = new Image()
+    hurtImage.src = hurt
+    this.hurtImage = hurtImage
 
     // sprite Animation
     this.frameX = 0
@@ -40,6 +47,17 @@ export default class RangedEnemy extends Enemy {
 
     // Flip sprite
     this.flip = false
+  }
+
+  hit() {
+    this.image = this.hurtImage
+    this.speed = 0
+    this.isHurt = true
+    setTimeout(() => {
+      this.image = this.walkImage
+      this.isHurt = false
+      this.speed = 2
+    }, 1000)
   }
 
   update(player, player2, deltaTime) {
@@ -114,9 +132,9 @@ export default class RangedEnemy extends Enemy {
 
   shoot(x, y) {
     const angle = Math.atan2(y - this.y + this.height / 2, x - this.x + this.width / 2)
-    
+
     this.game.enemyProjectiles.push(
-      new EnemyProjectile(this.game, this.x + this.width / 2, this.y + this.height/2, angle)
+      new EnemyProjectile(this.game, this.x + this.width / 2, this.y + this.height / 2, angle)
     )
   }
 

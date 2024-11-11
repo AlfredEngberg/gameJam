@@ -1,6 +1,8 @@
 import Enemy from './Enemy.js'
+import hurt from './assets/sprites/beetle/BeetleHurt.png'
 import Attack from './assets/sprites/beetle/BeetleAttack.png'
-import Move from './assets/sprites/beetle/BeetleMove.png'
+import walkImage from './assets/sprites/beetle/BeetleMove.png'
+
 export default class Beetle extends Enemy {
   constructor(game, x, y) {
     super(game)
@@ -14,8 +16,14 @@ export default class Beetle extends Enemy {
 
     //  Walk Image
     const image = new Image()
-    image.src = Move
+    image.src = walkImage
+    this.walkImage = walkImage
     this.image = image
+
+    // Hurt Image
+    const hurtImage = new Image()
+    hurtImage.src = hurt
+    this.hurtImage = hurtImage
 
     // sprite Animation
     this.frameX = 0
@@ -31,6 +39,17 @@ export default class Beetle extends Enemy {
 
     // Flip sprite
     this.flip = false
+  }
+
+  hit() {
+    this.image = this.hurtImage
+    this.speed = 0
+    this.isHurt = true
+    setTimeout(() => {
+      this.image = this.walkImage
+      this.isHurt = false
+      this.speed = 2
+    }, 1000)
   }
 
   update(player, player2, deltaTime) {

@@ -10,6 +10,10 @@ export default class Enemy {
     this.type = 'enemy'
   }
 
+  hit() {
+   
+  }
+
   update() {
     this.y += this.speedY
     this.x += this.speedX

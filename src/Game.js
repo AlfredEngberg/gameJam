@@ -32,7 +32,7 @@ export default class Game {
     this.gameTime = 0
     this.enemyTimer = 0
     this.enemyInterval = 1000
-    this.enemiesKilled = 10
+    this.enemiesKilled = 0
     this.bossSpawned = false
     this.gameWin = false
     this.Titlescreen = new Titlescreen(this)

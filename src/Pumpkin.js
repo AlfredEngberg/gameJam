@@ -1,4 +1,5 @@
 import Enemy from './Enemy.js'
+import hurt from './assets/sprites/mantis/MantisHurt.png'
 import mantisImage from './assets/sprites/mantis/MantisMove.png'
 
 export default class Pumpkin extends Enemy {
@@ -12,10 +13,16 @@ export default class Pumpkin extends Enemy {
     this.lives = 1
     this.type = 'mantis'
 
-    // Zombie Walk Image
+    //  Walk Image
     const image = new Image()
     image.src = mantisImage
+    this.mantisImage = mantisImage
     this.image = image
+
+    // Hurt Image
+    const hurtImage = new Image()
+    hurtImage.src = hurt
+    this.hurtImage = hurtImage
 
     // sprite Animation
     this.frameX = 0
@@ -31,6 +38,17 @@ export default class Pumpkin extends Enemy {
 
     // Flip sprite
     this.flip = false
+  }
+
+  hit() {
+    this.image = this.hurtImage
+    this.speed = 0
+    this.isHurt = true
+    setTimeout(() => {
+      this.image = this.mantisImage
+      this.isHurt = false
+      this.speed = 2
+    }, 1000)
   }
 
   update(player, player2, deltaTime) {

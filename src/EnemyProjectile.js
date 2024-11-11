@@ -1,5 +1,3 @@
-import blobImage from './assets/sprites/maggot/AcidBlob.png'
-
 export default class Projectile {
   constructor(game, x, y, angle, speed) {
     this.game = game
@@ -13,10 +11,8 @@ export default class Projectile {
     this.damage = 1
     this.markedForDeletion = false
 
-    // Arrow sprite image
-    const image = new Image()
-    image.src = blobImage
-    this.image = image
+    // Sprite image
+    this.image = game.assets.maggot_AcidBlob.data
 
     // Sprite animation variables
     this.maxFrame = 7

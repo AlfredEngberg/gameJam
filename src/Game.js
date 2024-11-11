@@ -18,7 +18,8 @@ import GameOverScreen from './GameOverScreen.js'
 import WinScreen from './WinScreen.js'
 import PowerUp from './PowerUp.js'
 export default class Game {
-  constructor(width, height, canvasPosition) {
+  constructor(width, height, canvasPosition, assets) {
+    this.assets = assets
     this.width = width
     this.height = height
     this.canvasPosition = canvasPosition

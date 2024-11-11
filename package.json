@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "compile": "node ./glob.js",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
@@ -12,6 +13,7 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
+    "glob": "^11.0.0",
     "modern-css-reset": "^1.4.0"
   }
 }

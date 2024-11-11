@@ -63,7 +63,7 @@ export default class boss extends Enemy {
       this.image = this.walkImage;
       this.isHurt = false;
       this.speed = 2;
-    }, 1000);
+    }, 800);
   }
 
   update(player, player2, deltaTime) {

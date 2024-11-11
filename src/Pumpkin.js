@@ -14,10 +14,8 @@ export default class Pumpkin extends Enemy {
     this.type = 'mantis'
 
     //  Walk Image
-    const image = new Image()
-    image.src = mantisImage
-    this.mantisImage = mantisImage
-    this.image = image
+    this.mantisImage = this.game.assets.mantis_MantisMove.data
+    this.image = this.mantisImage
 
     // Hurt Image
     const hurtImage = new Image()
@@ -40,8 +38,9 @@ export default class Pumpkin extends Enemy {
     this.flip = false
   }
 
-  hit() {
+  hit(damage) {
     this.image = this.hurtImage
+    console.log('damage:', damage)
     this.speed = 0
     this.isHurt = true
     setTimeout(() => {
@@ -103,7 +102,6 @@ export default class Pumpkin extends Enemy {
     }
   }
 
-
   draw(context) {
     if (this.flip) {
       context.save()
@@ -126,7 +124,14 @@ export default class Pumpkin extends Enemy {
       context.restore()
     }
 
-    // zombie Debug
+    // Draw damage
+    if (this.isHurt) {
+      context.fillStyle = 'red'
+      context.font = '20px Arial'
+      context.fillText('1', this.x, this.y)
+    }
+  
+    // Debug
     if (this.game.debug) {
       context.strokeRect(this.x, this.y, this.width, this.height)
     }

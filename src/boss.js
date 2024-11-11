@@ -63,7 +63,7 @@ export default class boss extends Enemy {
       this.image = this.walkImage;
       this.isHurt = false;
       this.speed = 2;
-    }, 800);
+    }, 600);
   }
 
   update(player, player2, deltaTime) {
@@ -151,6 +151,13 @@ export default class boss extends Enemy {
 
     if (this.flip) {
       context.restore();
+    }
+
+    // Draw damage
+    if (this.isHurt) {
+      context.fillStyle = 'red'
+      context.font = '20px Arial'
+      context.fillText('1', this.x, this.y)
     }
 
     // boss Debug

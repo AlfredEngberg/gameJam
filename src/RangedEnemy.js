@@ -159,6 +159,13 @@ export default class RangedEnemy extends Enemy {
       context.restore()
     }
 
+    // Draw damage
+    if (this.isHurt) {
+      context.fillStyle = 'red'
+      context.font = '20px Arial'
+      context.fillText(this.hit.damage, Math.random() * 1 + this.x, Math.random() * 1 + this.y)
+    }
+
     // zombie Debug
     if (this.game.debug) {
       context.strokeRect(this.x, this.y, this.width, this.height)

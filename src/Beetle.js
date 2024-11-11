@@ -115,6 +115,13 @@ export default class Beetle extends Enemy {
       this.height * 1.5
     );
 
+    // Draw damage
+    if (this.isHurt) {
+      context.fillStyle = 'red'
+      context.font = '20px Arial'
+      context.fillText('1', this.x, this.y)
+    }
+
     if (this.flip) {
       context.restore();
     }

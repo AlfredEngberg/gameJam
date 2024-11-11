@@ -94,7 +94,7 @@ export default class Pumpkin extends Enemy {
 
     if (speedX < 0) {
       this.flip = true
-    } else if (this.speedX > 0) {
+    } else {
       this.flip = false
     }
     if (this.lives <= 0) {

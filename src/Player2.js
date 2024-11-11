@@ -1,9 +1,9 @@
 import Projectile from "./Projectile.js";
 import Sword from "./Sword.js";
-import knightIdle from "./assets/sprites/Gangsters_2/Idle.png";
-import knightAttack from "./assets/sprites/Gangsters_2/Attack_1.png";
-import knightRun from "./assets/sprites/Gangsters_2/Walk.png";
-import knightDeath from "./assets/sprites/Gangsters_2/Dead.png";
+/* import knightIdle from "./assets/sprites/Gangster_2/Idle.png";
+import knightAttack from "./assets/sprites/Gangster_2/Attack_1.png";
+import knightRun from "./assets/sprites/Gangster_2/Walk.png";
+import knightDeath from "./assets/sprites/Gangster_2/Dead.png"; */
 
 export default class Player2 {
   constructor(game) {
@@ -26,24 +26,11 @@ export default class Player2 {
 
     this.lives = 7;
 
-    const imageIdle = new Image();
-    imageIdle.src = knightIdle;
-    this.image = imageIdle;
-    const imageRun = new Image();
-    imageRun.src = knightRun;
-    this.image = imageRun;
-    const imageAttack = new Image();
-    imageAttack.src = knightAttack;
-    this.image = imageAttack;
-    const imageDeath = new Image();
-    imageDeath.src = knightDeath;
-    this.image = imageIdle;
+    this.image = this.game.assets.Gangster2_Idle.data;
 
     this.powerTimerP2 = 0
     this.powerTimeLimitP2 = 6000000
     this.powerStateP2 = false
-
-    this.images = [imageIdle, imageRun, imageAttack, imageDeath];
 
     this.frameX = 0;
     this.frameY = 0;
@@ -56,19 +43,19 @@ export default class Player2 {
 
     this.state = "idle";
     this.idle = {
-      image: imageIdle,
+      image: this.game.assets.Gangster2_Idle.data,
       frames: 7,
     };
     this.running = {
-      image: imageRun,
+      image: this.game.assets.Gangster2_Walk.data,
       frames: 10,
     };
     this.shooting = {
-      image: imageAttack,
+      image: this.game.assets.Gangster2_Attack1.data,
       frames: 6,
     };
     this.death = {
-      image: imageDeath,
+      image: this.game.assets.Gangster2_Dead.data,
       frames: 10,
     };
   }

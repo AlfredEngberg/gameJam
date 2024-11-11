@@ -1,9 +1,4 @@
 import Projectile from './Projectile.js'
-import spriteImage from './assets/sprites/playerSprite.png'
-import knightIdle from "./assets/sprites/Gangsters_1/Idle.png";
-import knightAttack from "./assets/sprites/Gangsters_1/Shot.png";
-import knightRun from "./assets/sprites/Gangsters_1/Walk.png";
-import knightDeath from "./assets/sprites/Gangsters_1/Dead.png";
 
 export default class Player {
   constructor(game) {
@@ -27,18 +22,7 @@ export default class Player {
     this.grounded = false
 
     // Sprite images
-    const imageIdle = new Image();
-    imageIdle.src = knightIdle;
-
-    const imageRun = new Image();
-    imageRun.src = knightRun;
-
-    const imageAttack = new Image();
-    imageAttack.src = knightAttack;
-
-    const imageDeath = new Image();
-    imageDeath.src = knightDeath;
-    this.image = imageIdle;
+    this.image;
 
     // Sprite animation variables
     this.frameX = 0;
@@ -54,23 +38,21 @@ export default class Player {
     this.powerTimeLimit = 100000
     this.powerState = false
 
-
-
     this.state = "idle";
     this.idle = {
-      image: imageIdle,
+      image: this.game.assets.Gangster1_Idle.data,
       frames: 6,
     };
     this.running = {
-      image: imageRun,
+      image: this.game.assets.Gangster1_Walk.data,
       frames: 10,
     };
     this.attack = {
-      image: imageAttack,
+      image: this.game.assets.Gangster1_Shot.data,
       frames: 5,
     };
     this.death = {
-      image: imageDeath,
+      image: this.game.assets.Gangster1_Dead.data,
       frames: 5,
     };
 
@@ -132,7 +114,7 @@ export default class Player {
     // flip sprite direction
     if (this.speedX < 0) {
       this.flip = true
-    } else if (this.speedX > 0) {
+    } else {
       this.flip = false
     }
 

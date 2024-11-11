@@ -15,15 +15,11 @@ export default class RangedEnemy extends Enemy {
     this.color = 'green'
 
     //  Walk Image
-    const image = new Image()
-    image.src = walkImage
-    this.walkImage = walkImage
-    this.image = image
+    this.walkImage = this.game.assets.maggot_MaggotWalk.data
+    this.image = this.walkImage
 
     // Hurt Image
-    const hurtImage = new Image()
-    hurtImage.src = hurt
-    this.hurtImage = hurtImage
+    this.hurtImage = this.game.assets.maggot_MaggotHurt.data
 
     // sprite Animation
     this.frameX = 0

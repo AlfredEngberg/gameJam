@@ -1,55 +1,48 @@
-import Enemy from './Enemy.js'
-import hurt from './assets/sprites/beetle/BeetleHurt.png'
-import Attack from './assets/sprites/beetle/BeetleAttack.png'
-import walkImage from './assets/sprites/beetle/BeetleMove.png'
+import Enemy from "./Enemy.js";
 
 export default class Beetle extends Enemy {
   constructor(game, x, y) {
-    super(game)
-    this.width = 32
-    this.height = 32
-    this.x = x
-    this.y = y
-    this.speed = 2
-    this.lives = 1
-    this.type = 'beetle'
+    super(game);
+    this.width = 32;
+    this.height = 32;
+    this.x = x;
+    this.y = y;
+    this.speed = 2;
+    this.lives = 1;
+    this.type = "beetle";
 
     //  Walk Image
-    const image = new Image()
-    image.src = walkImage
-    this.walkImage = walkImage
-    this.image = image
+    this.walkImage = this.game.assets.beetle_BeetleMove.data;
+    this.image = this.walkImage;
 
     // Hurt Image
-    const hurtImage = new Image()
-    hurtImage.src = hurt
-    this.hurtImage = hurtImage
+    this.hurtImage = this.game.assets.beetle_BeetleHurt.data;
 
     // sprite Animation
-    this.frameX = 0
-    this.frameY = 0
-    this.maxFrame = 0
-    this.fps = 20
-    this.timer = 0
-    this.interval = 1000 / this.fps
+    this.frameX = 0;
+    this.frameY = 0;
+    this.maxFrame = 0;
+    this.fps = 20;
+    this.timer = 0;
+    this.interval = 1000 / this.fps;
     this.walk = {
       frameY: 1,
       frames: 4,
-    }
+    };
 
     // Flip sprite
-    this.flip = false
+    this.flip = false;
   }
 
   hit() {
-    this.image = this.hurtImage
-    this.speed = 0
-    this.isHurt = true
+    this.image = this.hurtImage;
+    this.speed = 0;
+    this.isHurt = true;
     setTimeout(() => {
-      this.image = this.walkImage
-      this.isHurt = false
-      this.speed = 2
-    }, 1000)
+      this.image = this.walkImage;
+      this.isHurt = false;
+      this.speed = 2;
+    }, 1000);
   }
 
   update(player, player2, deltaTime) {
@@ -71,44 +64,43 @@ export default class Beetle extends Enemy {
       dy = dy2;
       distance = distance2;
     }
-    const speedX = (dx / distance) * this.speed // calculate the x speed towards the player
-    const speedY = (dy / distance) * this.speed // calculate the y speed towards the player
+    const speedX = (dx / distance) * this.speed; // calculate the x speed towards the player
+    const speedY = (dy / distance) * this.speed; // calculate the y speed towards the player
 
     //  Animation
     if (speedX !== 0) {
-      this.frameY = this.walk.frameY
-      this.maxFrame = this.walk.frames
+      this.frameY = this.walk.frameY;
+      this.maxFrame = this.walk.frames;
     }
 
     if (this.timer > this.interval) {
-      this.frameX++
-      this.timer = 0
+      this.frameX++;
+      this.timer = 0;
     } else {
-      this.timer += deltaTime
+      this.timer += deltaTime;
     }
 
     if (this.frameX >= this.maxFrame) {
-      this.frameX = 0
+      this.frameX = 0;
     }
 
-    this.x += speedX // move the enemy towards the player on the x axis
-    this.y += speedY // move the enemy towards the player on the y axis
+    this.x += speedX; // move the enemy towards the player on the x axis
+    this.y += speedY; // move the enemy towards the player on the y axis
 
     if (speedX > 0) {
-      this.flip = true
+      this.flip = true;
     } else if (this.speedX < 0) {
-      this.flip = false
+      this.flip = false;
     }
     if (this.lives <= 0) {
-      this.markedForDeletion = true
+      this.markedForDeletion = true;
     }
   }
 
-
   draw(context) {
     if (this.flip) {
-      context.save()
-      context.scale(-1, 1)
+      context.save();
+      context.scale(-1, 1);
     }
 
     context.drawImage(
@@ -121,15 +113,15 @@ export default class Beetle extends Enemy {
       this.y,
       this.width * 1.5,
       this.height * 1.5
-    )
+    );
 
     if (this.flip) {
-      context.restore()
+      context.restore();
     }
 
     //Debug
     if (this.game.debug) {
-      context.strokeRect(this.x, this.y, this.width, this.height)
+      context.strokeRect(this.x, this.y, this.width, this.height);
     }
   }
 }

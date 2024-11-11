@@ -30,7 +30,7 @@ export default class Player2 {
 
     this.powerTimerP2 = 0
     this.powerTimeLimitP2 = 6000000
-    this.powerStateP2 = false
+    this.powerStateP2 = true
 
     this.frameX = 0;
     this.frameY = 0;

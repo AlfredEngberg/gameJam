@@ -114,7 +114,8 @@ export default class Game {
 
         enemy.update(this.player, this.player2, deltaTime)
         if (enemy.type === 'beetle') {
-          if (enemy.markedForDeletion === true) {
+          if (enemy.markedForDeletion == true) {
+            console.log("hej powerup")
             this.enemies.push(new PowerUp(this, enemy.x, enemy.y))
           }
         }
@@ -190,6 +191,9 @@ export default class Game {
 
         this.player.projectiles.forEach((projectile) => {
           if (this.checkProjectileCollision(projectile, enemy)) {
+            if(enemy.type='powerup'){
+              this.powerState=true
+            }
             enemy.hit(projectile.damage)
             if (enemy.lives >= 1) {
               enemy.lives -= projectile.damage
@@ -204,6 +208,9 @@ export default class Game {
         })
         this.player2.projectiles.forEach((projectile) => {
           if (this.checkCollision(projectile, enemy)) {
+            if(enemy.type='powerup'){
+              this.powerStateP2=true
+            }
             enemy.hit(projectile.damage)
             if (enemy.lives >= 1) {
               enemy.lives -= projectile.damage

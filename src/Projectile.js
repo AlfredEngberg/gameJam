@@ -1,5 +1,3 @@
-import arrowImage from "./assets/sprites/bullet.png";
-
 export default class Projectile {
   constructor(game, x, y, angle, speed) {
     this.game = game;
@@ -18,9 +16,7 @@ export default class Projectile {
     this.markedForDeletion = false;
 
     // Arrow sprite image
-    const image = new Image();
-    image.src = arrowImage;
-    this.image = image;
+    this.image = this.game.assets.bullet.data;
     this.spriteWidth = 16;
     this.spriteHeight = 16;
 

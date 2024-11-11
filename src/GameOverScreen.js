@@ -1,4 +1,3 @@
-import BackgroundGameOver from "./assets/sprites/GameOver.png";
 export default class GameOverScreen {
   constructor(game) {
     this.game = game;
@@ -7,9 +6,7 @@ export default class GameOverScreen {
     this.x = 100;
     this.y = -100;
 
-    const image = new Image();
-    image.src = BackgroundGameOver;
-    this.image = image;
+    this.image = this.game.assets.GameOver.data;
 
     this.frameX = 0;
     this.frameY = 0;

@@ -13,17 +13,14 @@ export default class RangedEnemy extends Enemy {
     this.speed = 1
     this.lives = Math.floor(Math.random() * 1) + 1
     this.color = 'green'
+    this.damageTaken = 0
 
     //  Walk Image
-    const image = new Image()
-    image.src = walkImage
-    this.walkImage = walkImage
-    this.image = image
+    this.walkImage = this.game.assets.maggot_MaggotWalk.data
+    this.image = this.walkImage
 
     // Hurt Image
-    const hurtImage = new Image()
-    hurtImage.src = hurt
-    this.hurtImage = hurtImage
+    this.hurtImage = this.game.assets.maggot_MaggotHurt.data
 
     // sprite Animation
     this.frameX = 0
@@ -49,7 +46,9 @@ export default class RangedEnemy extends Enemy {
     this.flip = false
   }
 
-  hit() {
+  hit(damage) {
+    console.log('damage:', damage)
+    this.damageTaken = damage
     this.image = this.hurtImage
     this.speed = 0
     this.isHurt = true
@@ -161,6 +160,13 @@ export default class RangedEnemy extends Enemy {
 
     if (this.flip) {
       context.restore()
+    }
+
+    // Draw damage
+    if (this.isHurt) {
+      context.fillStyle = 'red'
+      context.font = '20px Arial'
+      context.fillText(this.damageTaken, Math.random() * 1 + this.x, Math.random() * 1 + this.y)
     }
 
     // zombie Debug

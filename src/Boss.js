@@ -1,23 +1,28 @@
 import Enemy from "./Enemy.js";
 
-export default class Beetle extends Enemy {
+export default class Boss extends Enemy {
   constructor(game, x, y) {
     super(game);
-    this.width = 32;
-    this.height = 32;
+    this.spriteWidth = 64;
+    this.spriteHeight = 32;
+    this.scale = 3.5;
+    this.width = this.spriteWidth * this.scale;
+    this.height = this.spriteHeight * this.scale;
     this.x = x;
     this.y = y;
     this.speed = 2;
-    this.lives = 1;
-    this.type = "beetle";
+    this.type = "boss";
+    this.lives = 25;
     this.damageTaken = 0;
 
-    //  Walk Image
-    this.walkImage = this.game.assets.beetle_BeetleMove.data;
+    this.isHurt = false;
+
+    // boss Walk Image
+    this.walkImage = this.game.assets.boss_boss.data;
     this.image = this.walkImage;
 
-    // Hurt Image
-    this.hurtImage = this.game.assets.beetle_BeetleHurt.data;
+    // Boss hurt image
+    this.hurtImage = this.game.assets.boss_bossHurt.data;
 
     // sprite Animation
     this.frameX = 0;
@@ -27,12 +32,31 @@ export default class Beetle extends Enemy {
     this.timer = 0;
     this.interval = 1000 / this.fps;
     this.walk = {
-      frameY: 1,
-      frames: 4,
+      frameY: 0,
+      frameX: 0,
+      frames: 7,
+    };
+    this.death = {
+      frameY: 0,
+      frameX: 20,
+      frames: 29,
+    };
+    this.attack = {
+      frameY: 0,
+      frameX: 7,
+      frames: 13,
+    };
+    this.hurt = {
+      frameY: 0,
+      frameX: 0,
+      frames: 7,
     };
 
     // Flip sprite
     this.flip = false;
+
+    //boss sound
+    this.sound = this.game.assets.BossLaugh_wav.data;
   }
 
   hit(damage) {
@@ -45,7 +69,7 @@ export default class Beetle extends Enemy {
       this.image = this.walkImage;
       this.isHurt = false;
       this.speed = 2;
-    }, 1000);
+    }, 600);
   }
 
   update(player, player2, deltaTime) {
@@ -70,10 +94,18 @@ export default class Beetle extends Enemy {
     const speedX = (dx / distance) * this.speed; // calculate the x speed towards the player
     const speedY = (dy / distance) * this.speed; // calculate the y speed towards the player
 
-    //  Animation
+    // Animation
     if (speedX !== 0) {
       this.frameY = this.walk.frameY;
       this.maxFrame = this.walk.frames;
+    } else {
+      this.frameY = this.attack.frameY;
+      this.maxFrame = this.attack.frames;
+    }
+    if (this.lives <= 0) {
+      this.speed = 0;
+      this.frameY = this.death.frameY;
+      this.maxFrame = this.death.frames;
     }
 
     if (this.timer > this.interval) {
@@ -83,24 +115,34 @@ export default class Beetle extends Enemy {
       this.timer += deltaTime;
     }
 
-    if (this.frameX >= this.maxFrame) {
+    if (this.frameX >= this.maxFrame && this.lives <= 0) {
+      this.markedForDeletion = true;
+      this.game.gameWin = true;
+      console.log("boss dead");
+      console.log("game won");
+    } else if (this.frameX >= this.maxFrame) {
+      this.sound.play();
+      this.speed = 2;
       this.frameX = 0;
     }
 
     this.x += speedX; // move the enemy towards the player on the x axis
     this.y += speedY; // move the enemy towards the player on the y axis
 
-    if (speedX > 0) {
-      this.flip = true;
-    } else {
+    // flip sprite direction
+    console.log("speedX", speedX);
+    if (speedX < 0) {
       this.flip = false;
+      console.log("right");
+    } else {
+      this.flip = true;
+      console.log("left");
     }
-    if (this.lives <= 0) {
-      this.markedForDeletion = true;
-    }
+    console.log("flip", this.flip);
   }
 
   draw(context) {
+    console.log("flip", this.flip);
     if (this.flip) {
       context.save();
       context.scale(-1, 1);
@@ -108,15 +150,19 @@ export default class Beetle extends Enemy {
 
     context.drawImage(
       this.image,
-      this.frameX * this.width,
-      this.frameY * this.height,
-      this.width,
-      this.height,
+      this.frameX * this.spriteWidth,
+      this.frameY * this.spriteHeight,
+      this.spriteWidth,
+      this.spriteHeight,
       this.flip ? this.x * -1 - this.width : this.x,
       this.y,
-      this.width * 1.5,
-      this.height * 1.5
+      this.width,
+      this.height
     );
+
+    if (this.flip) {
+      context.restore();
+    }
 
     // Draw damage
     if (this.isHurt) {
@@ -125,12 +171,11 @@ export default class Beetle extends Enemy {
       context.fillText(this.damageTaken, this.x, this.y)
     }
 
-    if (this.flip) {
-      context.restore();
-    }
-
-    //Debug
+    // boss Debug
     if (this.game.debug) {
+      context.fillText(`Lives: ${this.lives}`, this.x, this.y - 30);
+      context.fillText(`Frame: ${this.frameX}`, this.x, this.y - 10);
+      context.fillText(`maxframe: ${this.maxFrame}`, this.x, this.y - 20);
       context.strokeRect(this.x, this.y, this.width, this.height);
     }
   }

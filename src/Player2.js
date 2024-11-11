@@ -76,10 +76,10 @@ export default class Player2 {
   update(deltaTime) {
 
     if (this.powerTimerP2 < this.powerTimeLimitP2 && this.powerStateP2 === true) {
-      
+
       this.powerTimerP2 += deltaTime
     } else {
-      
+
       this.powerStateP2 = false
       this.powerTimerP2 = 0
 
@@ -109,12 +109,10 @@ export default class Player2 {
       this.frameX++;
       if (this.frameX === 3 && this.state === "shooting") {
         this.shoot(this.game.input.mouseX, this.game.input.mouseY);
-        console.log(this.projectiles);
       }
       if (this.frameX >= (this.maxFrame)) {
         if (this.state === "shooting") {
           this.projectiles.pop();
-          console.log(this.projectiles);
           this.setState("idle");
         }
         this.frameX = 0;

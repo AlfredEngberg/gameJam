@@ -12,6 +12,7 @@ export default class Pumpkin extends Enemy {
     this.speed = 2
     this.lives = 1
     this.type = 'mantis'
+    this.damageTaken = 0
 
     //  Walk Image
     this.mantisImage = this.game.assets.mantis_MantisMove.data
@@ -40,6 +41,7 @@ export default class Pumpkin extends Enemy {
 
   hit(damage) {
     this.image = this.hurtImage
+    this.damageTaken = damage
     console.log('damage:', damage)
     this.speed = 0
     this.isHurt = true
@@ -128,9 +130,9 @@ export default class Pumpkin extends Enemy {
     if (this.isHurt) {
       context.fillStyle = 'red'
       context.font = '20px Arial'
-      context.fillText('1', this.x, this.y)
+      context.fillText(this.damageTaken, this.x, this.y)
     }
-  
+
     // Debug
     if (this.game.debug) {
       context.strokeRect(this.x, this.y, this.width, this.height)

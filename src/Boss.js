@@ -1,10 +1,13 @@
 import Enemy from "./Enemy.js";
 
-export default class boss extends Enemy {
+export default class Boss extends Enemy {
   constructor(game, x, y) {
     super(game);
-    this.width = 64;
-    this.height = 48;
+    this.spriteWidth = 64;
+    this.spriteHeight = 32;
+    this.scale = 3.5;
+    this.width = this.spriteWidth * this.scale;
+    this.height = this.spriteHeight * this.scale;
     this.x = x;
     this.y = y;
     this.speed = 2;
@@ -124,14 +127,19 @@ export default class boss extends Enemy {
     this.y += speedY; // move the enemy towards the player on the y axis
 
     // flip sprite direction
-    if (this.speedX < 0) {
-      this.flip = true;
-    } else if (this.speedX > 0) {
+    console.log("speedX", speedX);
+    if (speedX < 0) {
       this.flip = false;
+      console.log("right");
+    } else {
+      this.flip = true;
+      console.log("left");
     }
+    console.log("flip", this.flip);
   }
 
   draw(context) {
+    console.log("flip", this.flip);
     if (this.flip) {
       context.save();
       context.scale(-1, 1);
@@ -139,14 +147,14 @@ export default class boss extends Enemy {
 
     context.drawImage(
       this.image,
-      this.frameX * this.width,
-      this.frameY * this.height,
-      this.width,
-      this.height,
+      this.frameX * this.spriteWidth,
+      this.frameY * this.spriteHeight,
+      this.spriteWidth,
+      this.spriteHeight,
       this.flip ? this.x * -1 - this.width : this.x,
       this.y,
-      this.width * 2.5,
-      this.height * 2.5
+      this.width,
+      this.height
     );
 
     if (this.flip) {

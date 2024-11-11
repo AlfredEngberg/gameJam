@@ -7,11 +7,11 @@ import Beetle from './Beetle.js'
 import RangedEnemy from './RangedEnemy.js'
 import Boss from './Boss.js'
 import Candy from './Candy.js'
-import Stinger from './assets/sounds/Stinger.wav'
+/* import Stinger from './assets/sounds/Stinger.wav' */
 import Background from './Background.js'
 import Titlescreen from './Titlescreen.js'
-import MainMusic from './assets/sounds/MainMusic.ogg'
-import MenuMusic from './assets/sounds/MenuMusic.ogg'
+/* import MainMusic from './assets/sounds/MainMusic.ogg'
+import MenuMusic from './assets/sounds/MenuMusic.ogg' */
 import HealthBar from './HealthBar.js'
 import HealthBarP2 from './HealthBarP2.js'
 import GameOverScreen from './GameOverScreen.js'
@@ -38,16 +38,16 @@ export default class Game {
     this.gameWin = false
     this.Titlescreen = new Titlescreen(this)
     this.background = new Background(this)
-    this.sound = new Audio
-    this.sound.src = Stinger
+    this.sound = assets.Stinger_wav.data/* new Audio
+    this.sound.src = Stinger */
     this.WinScreen = new WinScreen(this)
     this.HealthBar = new HealthBar(this)
     this.HealthBarP2 = new HealthBarP2(this)
     this.GameOverScreen = new GameOverScreen(this)
-    this.MainMusic = new Audio
-    this.MainMusic.src = MainMusic
-    this.MenuMusic = new Audio
-    this.MenuMusic.src = MenuMusic
+    this.MainMusic = assets.MainMusic_ogg.data/* new Audio
+    this.MainMusic.src = MainMusic */
+    this.MenuMusic = assets.MenuMusic_ogg.data/* new Audio
+    this.MenuMusic.src = MenuMusic */
     this.gameStart = false
     this.viewMainMenu = true
     this.viewControls = false
@@ -74,7 +74,7 @@ export default class Game {
         for (let i = 0; i < this.enemies.length; i++) {
           this.enemies[i].markedForDeletion = true
         }
-        this.enemies.push(new boss(this, 200, 100))
+        this.enemies.push(new Boss(this, 200, 100))
         this.sound.play();
         this.bossSpawned = true
         console.log('boss spawned')

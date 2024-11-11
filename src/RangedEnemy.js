@@ -1,7 +1,5 @@
 import Enemy from './Enemy.js'
 import EnemyProjectile from './EnemyProjectile.js'
-import walkImage from './assets/sprites/maggot/MaggotWalk.png'
-import hurt from './assets/sprites/maggot/MaggotHurt.png'
 
 export default class RangedEnemy extends Enemy {
   constructor(game, x, y) {

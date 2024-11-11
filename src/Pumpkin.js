@@ -1,6 +1,4 @@
 import Enemy from './Enemy.js'
-import hurt from './assets/sprites/mantis/MantisHurt.png'
-import mantisImage from './assets/sprites/mantis/MantisMove.png'
 
 export default class Pumpkin extends Enemy {
   constructor(game, x, y) {
@@ -19,9 +17,7 @@ export default class Pumpkin extends Enemy {
     this.image = this.mantisImage
 
     // Hurt Image
-    const hurtImage = new Image()
-    hurtImage.src = hurt
-    this.hurtImage = hurtImage
+    this.hurtImage = this.game.assets.mantis_MantisHurt.data
 
     // sprite Animation
     this.frameX = 0

@@ -1,5 +1,6 @@
 import Enemy from './Enemy.js'
 import walk from './assets/sprites/boss/boss.png'
+import hurt from './assets/sprites/boss/bossHurt.png'
 import Laugh from './assets/sounds/BossLaugh.wav'
 
 export default class boss extends Enemy {
@@ -13,10 +14,18 @@ export default class boss extends Enemy {
         this.type = 'boss'
         this.lives = 25
 
+        this.isHurt = false
+
         // boss Walk Image
         const walkImage = new Image()
         walkImage.src = walk
+        this.walkImage = walkImage
         this.image = walkImage
+
+        // Boss hurt image
+        const hurtImage = new Image()
+        hurtImage.src = hurt
+        this.hurtImage = hurtImage
 
         // sprite Animation
         this.frameX = 0
@@ -40,6 +49,11 @@ export default class boss extends Enemy {
             frameX: 7,
             frames: 13,
         }
+        this.hurt = {
+            frameY: 0,
+            frameX: 0,
+            frames: 7,
+        }
 
         // Flip sprite
         this.flip = false
@@ -47,8 +61,17 @@ export default class boss extends Enemy {
         //boss sound
         this.sound = new Audio
         this.sound.src = Laugh
+    }
 
-
+    hit() {
+        this.image = this.hurtImage
+        this.speed = 0
+        this.isHurt = true
+        setTimeout(() => {
+            this.image = this.walkImage
+            this.isHurt = false
+            this.speed = 2
+        }, 1000)
     }
 
     update(player, player2, deltaTime) {
@@ -94,14 +117,12 @@ export default class boss extends Enemy {
             this.timer += deltaTime
         }
 
-        if (this.frameX >= this.maxFrame) {
-            if (this.lives <= 0) {
-                this.markedForDeletion = true
-                this.game.gameWin = true
-                console.log('boss dead')
-                console.log('game won')
-                
-            }
+        if (this.frameX >= this.maxFrame && this.lives <= 0) {
+            this.markedForDeletion = true
+            this.game.gameWin = true
+            console.log('boss dead')
+            console.log('game won')
+        } else if (this.frameX >= this.maxFrame) {
             this.sound.play()
             this.speed = 2
             this.frameX = 0

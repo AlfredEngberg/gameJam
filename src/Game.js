@@ -31,17 +31,17 @@ export default class Game {
     this.gameTime = 0
     this.enemyTimer = 0
     this.enemyInterval = 1000
-    this.enemiesKilled = 0
+    this.enemiesKilled = 10
     this.bossSpawned = false
     this.gameWin = false
     this.Titlescreen = new Titlescreen(this)
     this.background = new Background(this)
     this.sound = new Audio
     this.sound.src = Stinger
- this.WinScreen= new WinScreen(this)
+    this.WinScreen = new WinScreen(this)
     this.HealthBar = new HealthBar(this)
     this.HealthBarP2 = new HealthBarP2(this)
-    this.GameOverScreen= new GameOverScreen(this) 
+    this.GameOverScreen = new GameOverScreen(this)
     this.MainMusic = new Audio
     this.MainMusic.src = MainMusic
     this.MenuMusic = new Audio
@@ -66,7 +66,7 @@ export default class Game {
       this.MainMusic.play()
     }
 
-    
+
     if (this.gameStart === true && this.gameOver === false) {
       if (this.enemiesKilled === 10 && this.bossSpawned === false) {
         for (let i = 0; i < this.enemies.length; i++) {
@@ -89,13 +89,13 @@ export default class Game {
           x = Math.random() * this.width // if on bottom edge, randomize x position
         }
         if (Math.random() > 0.5) {
-            this.enemies.push(new Pumpkin(this, x, y))  
+          this.enemies.push(new Pumpkin(this, x, y))
         } else if (Math.random() < 0.3) {
-           this.enemies.push(new Candy(this, x, y)) 
+          this.enemies.push(new Candy(this, x, y))
         } else if (Math.random() < 0.4) {
-            this.enemies.push(new RangedEnemy(this, x, y))  
-        } else if(Math.random()< 0.2){
-          this.enemies.push(new Beetle(this, x, y)) 
+          this.enemies.push(new RangedEnemy(this, x, y))
+        } else if (Math.random() < 0.2) {
+          this.enemies.push(new Beetle(this, x, y))
         }
         this.enemyTimer = 0
       } else {
@@ -131,7 +131,7 @@ export default class Game {
           if (enemy.type !== 'boss') {
             enemy.markedForDeletion = true
           }
-          if (enemy.type === 'mantis'||enemy.type === 'beetle' ) {
+          if (enemy.type === 'mantis' || enemy.type === 'beetle') {
             if (this.HealthBarP2.frameX >= 0) {
               this.HealthBarP2.frameX++
             }
@@ -179,6 +179,7 @@ export default class Game {
         })
         this.player2.projectiles.forEach((projectile) => {
           if (this.checkCollision(projectile, enemy)) {
+              enemy.hit()
             if (enemy.lives >= 1) {
               enemy.lives -= projectile.damage
             } else {
@@ -210,7 +211,7 @@ export default class Game {
 
   draw(context) {
 
-    if(this.gameOver===true){
+    if (this.gameOver === true) {
       this.GameOverScreen.draw(context)
     }
 
@@ -218,10 +219,10 @@ export default class Game {
       this.MenuMusic.play()
       this.Titlescreen.draw(context)
     }
-if(this.gameWin===true){
-  this.WinScreen.draw(context)
-}
-    if (this.gameStart === true && this.gameOver !== true  && this.gameWin !== true) {
+    if (this.gameWin === true) {
+      this.WinScreen.draw(context)
+    }
+    if (this.gameStart === true && this.gameOver !== true && this.gameWin !== true) {
       this.background.draw(context)
 
       this.MenuMusic.pause()
@@ -293,9 +294,7 @@ if(this.gameWin===true){
   }
 
   checkCollision(object1, object2) {
-
     return (
-
       object1.x < object2.x + object2.width &&
       object1.x + object1.width > object2.x &&
       object1.y < object2.y + object2.height &&

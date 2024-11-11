@@ -10,6 +10,7 @@ export default class Beetle extends Enemy {
     this.speed = 2;
     this.lives = 1;
     this.type = "beetle";
+    this.damageTaken = 0;
 
     //  Walk Image
     this.walkImage = this.game.assets.beetle_BeetleMove.data;
@@ -34,7 +35,9 @@ export default class Beetle extends Enemy {
     this.flip = false;
   }
 
-  hit() {
+  hit(damage) {
+    console.log("damage:", damage);
+    this.damageTaken = damage;
     this.image = this.hurtImage;
     this.speed = 0;
     this.isHurt = true;
@@ -119,7 +122,7 @@ export default class Beetle extends Enemy {
     if (this.isHurt) {
       context.fillStyle = 'red'
       context.font = '20px Arial'
-      context.fillText('1', this.x, this.y)
+      context.fillText(this.damageTaken, this.x, this.y)
     }
 
     if (this.flip) {

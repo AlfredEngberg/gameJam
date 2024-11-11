@@ -10,6 +10,7 @@ export default class boss extends Enemy {
     this.speed = 2;
     this.type = "boss";
     this.lives = 25;
+    this.damageTaken = 0;
 
     this.isHurt = false;
 
@@ -55,7 +56,9 @@ export default class boss extends Enemy {
     this.sound = this.game.assets.BossLaugh_wav.data;
   }
 
-  hit() {
+  hit(damage) {
+    console.log("damage:", damage);
+    this.damageTaken = damage;
     this.image = this.hurtImage;
     this.speed = 0;
     this.isHurt = true;
@@ -157,7 +160,7 @@ export default class boss extends Enemy {
     if (this.isHurt) {
       context.fillStyle = 'red'
       context.font = '20px Arial'
-      context.fillText('1', this.x, this.y)
+      context.fillText(this.damageTaken, this.x, this.y)
     }
 
     // boss Debug

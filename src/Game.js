@@ -90,11 +90,11 @@ export default class Game {
           x = Math.random() * this.width // if on bottom edge, randomize x position
         }
         if (Math.random() > 0.5) {
-          this.enemies.push(new Pumpkin(this, x, y))
+           this.enemies.push(new Pumpkin(this, x, y)) 
         } else if (Math.random() < 0.3) {
-          this.enemies.push(new Candy(this, x, y))
+           this.enemies.push(new Candy(this, x, y)) 
         } else if (Math.random() < 0.4) {
-          this.enemies.push(new RangedEnemy(this, x, y))
+           this.enemies.push(new RangedEnemy(this, x, y)) 
         } else if (Math.random() < 0.9) {
           this.enemies.push(new Beetle(this, x, y))
 
@@ -121,6 +121,11 @@ export default class Game {
 
         if (this.checkCollision(this.player, enemy)) {
 
+          if (enemy.type === 'powerup'){
+this.player.powerState=true
+
+          }
+
           if (enemy.type !== 'boss') {
             enemy.markedForDeletion = true
           }
@@ -140,6 +145,12 @@ export default class Game {
         }
 
         if (this.checkCollision(this.player2, enemy)) {
+
+          if (enemy.type === 'powerup'){
+            this.player2.powerStateP2=true
+                      }
+            
+
           if (enemy.type !== 'boss') {
             enemy.markedForDeletion = true
           }

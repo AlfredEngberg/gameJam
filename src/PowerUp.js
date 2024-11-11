@@ -1,5 +1,6 @@
 import Enemy from './Enemy'
 import PowerUpImage from "./assets/sprites/PowerUp.png"
+
 export default class PowerUp extends Enemy {
   constructor(game, x, y) {
     super(game)
@@ -11,7 +12,6 @@ export default class PowerUp extends Enemy {
     this.lives = 1
     this.color = 'red'
     this.type = 'powerup'
-
 
 
     this.frameX = 0

@@ -178,7 +178,7 @@ export default class Player2 {
   }
 
   draw(context) {
-    if (this.powerState === true) {
+    if (this.powerStateP2 === true) {
 
       if (this.flip) {
         context.save();

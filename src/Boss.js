@@ -60,7 +60,7 @@ export default class Boss extends Enemy {
   }
 
   hit(damage) {
-    console.log("damage:", damage);
+    console.log("damage on enemy:", damage);
     this.damageTaken = damage;
     this.image = this.hurtImage;
     this.speed = 0;
@@ -130,19 +130,14 @@ export default class Boss extends Enemy {
     this.y += speedY; // move the enemy towards the player on the y axis
 
     // flip sprite direction
-    console.log("speedX", speedX);
     if (speedX < 0) {
       this.flip = false;
-      console.log("right");
     } else {
       this.flip = true;
-      console.log("left");
     }
-    console.log("flip", this.flip);
   }
 
   draw(context) {
-    console.log("flip", this.flip);
     if (this.flip) {
       context.save();
       context.scale(-1, 1);

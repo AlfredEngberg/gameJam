@@ -116,7 +116,6 @@ export default class Game {
         enemy.update(this.player, this.player2, deltaTime)
         if (enemy.markedForDeletion === true) {
           if (Math.random() > 0.3) {
-            console.log("hej powerup")
             this.enemies.push(new PowerUp(this, enemy.x, enemy.y))
           }
         }
@@ -199,7 +198,7 @@ export default class Game {
               enemy.lives -= projectile.damage
             } else {
               this.enemiesKilled++
-              if (this.bossSpawned === false) {
+              if (enemy.type !== 'boss') {
                 enemy.markedForDeletion = true
               }
             }
@@ -216,7 +215,7 @@ export default class Game {
               enemy.lives -= projectile.damage
             } else {
               this.enemiesKilled++
-              if (this.bossSpawned === false) {
+              if (enemy.type !== 'boss') {
                 enemy.markedForDeletion = true
               }
             }

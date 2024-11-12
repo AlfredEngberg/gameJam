@@ -113,8 +113,8 @@ export default class Game {
 
 
         enemy.update(this.player, this.player2, deltaTime)
-        if (enemy.type === 'beetle') {
-          if (enemy.markedForDeletion == true) {
+        if (enemy.markedForDeletion===true){
+        if (Math.random()>0.3){
             console.log("hej powerup")
             this.enemies.push(new PowerUp(this, enemy.x, enemy.y))
           }

@@ -44,6 +44,7 @@ export default class Game {
     this.HealthBar = new HealthBar(this)
     this.HealthBarP2 = new HealthBarP2(this)
     this.GameOverScreen = new GameOverScreen(this)
+    this.RangedEnemySound = assets.RangedEnemyHit_wav.data
     this.MainMusic = assets.MainMusic_ogg.data/* new Audio
     this.MainMusic.src = MainMusic */
     this.MenuMusic = assets.MenuMusic_ogg.data/* new Audio
@@ -65,7 +66,7 @@ export default class Game {
     this.HealthBarP2.update(deltaTime)
     if (!this.gameOver && this.gameStart === true) {
       this.gameTime += deltaTime
-      this.MainMusic.play()
+      /* this.MainMusic.play() */
     }
 
 
@@ -122,6 +123,8 @@ export default class Game {
 
 
         if (this.checkCollision(this.player, enemy)) {
+
+          
 
           if (enemy.type === 'powerup') {
             this.player.powerState = true
@@ -191,6 +194,10 @@ export default class Game {
 
         this.player.projectiles.forEach((projectile) => {
           if (this.checkProjectileCollision(projectile, enemy)) {
+            if (enemy.type ==='rangedenemy'){
+              this.RangedEnemySound.play()
+                        }
+              
             if(enemy.type='powerup'){
               this.powerState=true
             }

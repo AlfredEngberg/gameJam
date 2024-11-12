@@ -12,7 +12,7 @@ export default class RangedEnemy extends Enemy {
     this.lives = Math.floor(Math.random() * 1) + 1
     this.color = 'green'
     this.damageTaken = 0
-
+    this.type = "rangedenemy"
     //  Walk Image
     this.walkImage = this.game.assets.maggot_MaggotWalk.data
     this.image = this.walkImage

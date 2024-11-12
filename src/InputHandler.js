@@ -6,12 +6,12 @@ export default class InputHandler {
     this.game = game
     this.mouseX = 0
     this.mouseY = 0
-this.shootsound = new Audio
-this.shootsound.src = shootsound
-this.punchsound = new Audio
-this.punchsound.src = punchsound
-this.selectsound = new Audio
-this.selectsound.src = selectsound
+    this.shootsound = new Audio
+    this.shootsound.src = shootsound
+    this.punchsound = new Audio
+    this.punchsound.src = punchsound
+    this.selectsound = new Audio
+    this.selectsound.src = selectsound
     window.addEventListener('keydown', (event) => {
       if (
         (event.key === 'ArrowUp' ||
@@ -44,6 +44,10 @@ this.selectsound.src = selectsound
 
       // For restarting the game
       if (event.key === 'r' && this.game.gameOver || this.game.gameWin) {
+        for (let i = 0; i < this.game.enemies.length; i++) {
+          this.game.enemies[i].markedForDeletion = true
+        }
+
         this.game.gameOver = false
         this.game.gameStart = false
         this.game.gameWin = false

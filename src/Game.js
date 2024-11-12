@@ -114,8 +114,8 @@ export default class Game {
 
 
         enemy.update(this.player, this.player2, deltaTime)
-        if (enemy.markedForDeletion===true){
-        if (Math.random()>0.3){
+        if (enemy.markedForDeletion === true) {
+          if (Math.random() > 0.3) {
             console.log("hej powerup")
             this.enemies.push(new PowerUp(this, enemy.x, enemy.y))
           }
@@ -123,18 +123,14 @@ export default class Game {
 
 
         if (this.checkCollision(this.player, enemy)) {
-
-          
-
           if (enemy.type === 'powerup') {
             this.player.powerState = true
 
           }
-
           if (enemy.type !== 'boss') {
             enemy.markedForDeletion = true
           }
-          if (enemy.type === 'mantis' || enemy.type === 'beetle') {
+          if (enemy.type === 'mantis' || enemy.type === 'beetle' || enemy.type === 'ranged') {
             if (this.HealthBar.frameX >= 0) {
               this.HealthBar.frameX++
             }
@@ -150,16 +146,13 @@ export default class Game {
         }
 
         if (this.checkCollision(this.player2, enemy)) {
-
           if (enemy.type === 'powerup') {
             this.player2.powerStateP2 = true
           }
-
-
           if (enemy.type !== 'boss') {
             enemy.markedForDeletion = true
           }
-          if (enemy.type === 'mantis' || enemy.type === 'beetle') {
+          if (enemy.type === 'mantis' || enemy.type === 'beetle' || enemy.type === 'ranged') {
             if (this.HealthBarP2.frameX >= 0) {
               this.HealthBarP2.frameX++
             }
@@ -194,12 +187,12 @@ export default class Game {
 
         this.player.projectiles.forEach((projectile) => {
           if (this.checkProjectileCollision(projectile, enemy)) {
-            if (enemy.type ==='rangedenemy'){
+            if (enemy.type === 'rangedenemy') {
               this.RangedEnemySound.play()
-                        }
-              
-            if(enemy.type='powerup'){
-              this.powerState=true
+            }
+
+            if (enemy.type = 'powerup') {
+              this.powerState = true
             }
             enemy.hit(projectile.damage)
             if (enemy.lives >= 1) {
@@ -215,8 +208,8 @@ export default class Game {
         })
         this.player2.projectiles.forEach((projectile) => {
           if (this.checkCollision(projectile, enemy)) {
-            if(enemy.type='powerup'){
-              this.powerStateP2=true
+            if (enemy.type = 'powerup') {
+              this.powerStateP2 = true
             }
             enemy.hit(projectile.damage)
             if (enemy.lives >= 1) {

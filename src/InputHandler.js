@@ -19,6 +19,7 @@ this.selectsound.src = selectsound
           event.key === 'ArrowLeft' ||
           event.key === 'ArrowRight' ||
           event.key === 'g' ||
+          event.key === 'r' ||
           event.key === 'c' ||
           event.key === 'b' ||
           event.key === 'w' ||

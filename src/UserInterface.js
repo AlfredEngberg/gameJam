@@ -206,6 +206,11 @@ export default class UserInterface {
         this.game.width / 2,
         this.game.height / 2 - 20
       )
+      context.fillText(
+        'Press "R" to restart',
+        this.game.width / 2,
+        this.game.height / 1.5 - 20
+      )
     }
 
     if (this.game.gameWin === true) {
@@ -221,6 +226,11 @@ export default class UserInterface {
         'Thanks for playing!',
         this.game.width / 2,
         this.game.height / 1.5 - 20
+      )
+      context.fillText(
+        'Press "R" to restart',
+        this.game.width / 2,
+        this.game.height / 1.2 - 20
       )
     }
 

@@ -44,6 +44,7 @@ export default class Game {
     this.HealthBar = new HealthBar(this)
     this.HealthBarP2 = new HealthBarP2(this)
     this.GameOverScreen = new GameOverScreen(this)
+    this.PumpkinSound= assets.MantisHurt_wav.data
     this.RangedEnemySound = assets.RangedEnemyHit_wav.data
     this.MainMusic = assets.MainMusic_ogg.data/* new Audio
     this.MainMusic.src = MainMusic */
@@ -190,7 +191,9 @@ export default class Game {
             if (enemy.type === 'rangedenemy') {
               this.RangedEnemySound.play()
             }
-
+            if(enemy.type==='mantis'){
+              this.PumpkinSound.play()
+            }
             if (enemy.type = 'powerup') {
               this.powerState = true
             }

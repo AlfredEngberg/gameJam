@@ -47,6 +47,7 @@ export default class Game {
     this.PumpkinSound = assets.MantisHurt_wav.data
     this.RangedEnemySound = assets.RangedEnemyHit_wav.data
     this.DamageSound = assets.DamageSound_wav.data
+    this.BeetleHit= assets.BeetleHit_wav.data
     this.MainMusic = assets.MainMusic_ogg.data/* new Audio
     this.MainMusic.src = MainMusic */
     this.MenuMusic = assets.MenuMusic_ogg.data/* new Audio
@@ -68,7 +69,7 @@ export default class Game {
     this.HealthBarP2.update(deltaTime)
     if (!this.gameOver && this.gameStart === true) {
       this.gameTime += deltaTime
-      /* this.MainMusic.play() */
+       this.MainMusic.play() 
     }
 
 
@@ -187,6 +188,9 @@ export default class Game {
 
         this.player.projectiles.forEach((projectile) => {
           if (this.checkProjectileCollision(projectile, enemy)) {
+            if(enemy.type==='beetle'){
+              this.BeetleHit.play()
+            }
             if (enemy.type === 'rangedenemy') {
               this.RangedEnemySound.play()
             }

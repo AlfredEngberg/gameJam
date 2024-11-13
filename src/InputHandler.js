@@ -57,6 +57,7 @@ export default class InputHandler {
         this.game.player.lives = 7
         this.game.player2.lives = 7
         this.game.enemiesKilled = 0
+        this.game.bossSpawned = false
         this.game.player.ammo = 20
         this.game.HealthBar.frameX = 0
         this.game.HealthBarP2.frameX = 0

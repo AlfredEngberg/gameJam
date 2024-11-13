@@ -44,9 +44,9 @@ export default class Game {
     this.HealthBar = new HealthBar(this)
     this.HealthBarP2 = new HealthBarP2(this)
     this.GameOverScreen = new GameOverScreen(this)
-    this.PumpkinSound= assets.MantisHurt_wav.data
+    this.PumpkinSound = assets.MantisHurt_wav.data
     this.RangedEnemySound = assets.RangedEnemyHit_wav.data
-    this.DamageSound= assets.DamageSound_wav.data
+    this.DamageSound = assets.DamageSound_wav.data
     this.MainMusic = assets.MainMusic_ogg.data/* new Audio
     this.MainMusic.src = MainMusic */
     this.MenuMusic = assets.MenuMusic_ogg.data/* new Audio
@@ -75,7 +75,9 @@ export default class Game {
     if (this.gameStart === true && this.gameOver === false) {
       if (this.enemiesKilled === 10 && this.bossSpawned === false) {
         for (let i = 0; i < this.enemies.length; i++) {
-          this.enemies[i].markedForDeletion = true
+          if (this.enemies[i].type !== 'boss') {
+            this.enemies[i].markedForDeletion = true
+          }
         }
         this.enemies.push(new Boss(this, 200, 100))
         this.sound.play();
@@ -101,7 +103,6 @@ export default class Game {
           this.enemies.push(new RangedEnemy(this, x, y))
         } else if (Math.random() < 0.9) {
           this.enemies.push(new Beetle(this, x, y))
-
         }
         this.enemyTimer = 0
       } else {
@@ -112,9 +113,6 @@ export default class Game {
 
 
       this.enemies.forEach((enemy, x, y) => {
-
-
-
         enemy.update(this.player, this.player2, deltaTime)
         if (enemy.markedForDeletion === true) {
           if (Math.random() > 0.3) {
@@ -127,7 +125,6 @@ export default class Game {
           this.DamageSound.play()
           if (enemy.type === 'powerup') {
             this.player.powerState = true
-
           }
           if (enemy.type !== 'boss') {
             enemy.markedForDeletion = true
@@ -193,7 +190,7 @@ export default class Game {
             if (enemy.type === 'rangedenemy') {
               this.RangedEnemySound.play()
             }
-            if(enemy.type==='mantis'){
+            if (enemy.type === 'mantis') {
               this.PumpkinSound.play()
             }
             if (enemy.type = 'powerup') {

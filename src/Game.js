@@ -197,7 +197,7 @@ export default class Game {
             if (enemy.type === 'mantis') {
               this.PumpkinSound.play()
             }
-            if (enemy.type = 'powerup') {
+            if (enemy.type === 'powerup') {
               this.powerState = true
             }
             enemy.hit(projectile.damage)
@@ -214,7 +214,7 @@ export default class Game {
         })
         this.player2.projectiles.forEach((projectile) => {
           if (this.checkCollision(projectile, enemy)) {
-            if (enemy.type = 'powerup') {
+            if (enemy.type === 'powerup') {
               this.powerStateP2 = true
             }
             enemy.hit(projectile.damage)

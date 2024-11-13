@@ -46,6 +46,7 @@ export default class Game {
     this.GameOverScreen = new GameOverScreen(this)
     this.PumpkinSound= assets.MantisHurt_wav.data
     this.RangedEnemySound = assets.RangedEnemyHit_wav.data
+    this.DamageSound= assets.DamageSound_wav.data
     this.MainMusic = assets.MainMusic_ogg.data/* new Audio
     this.MainMusic.src = MainMusic */
     this.MenuMusic = assets.MenuMusic_ogg.data/* new Audio
@@ -123,6 +124,7 @@ export default class Game {
 
 
         if (this.checkCollision(this.player, enemy)) {
+          this.DamageSound.play()
           if (enemy.type === 'powerup') {
             this.player.powerState = true
 
@@ -146,6 +148,7 @@ export default class Game {
         }
 
         if (this.checkCollision(this.player2, enemy)) {
+          this.DamageSound.play()
           if (enemy.type === 'powerup') {
             this.player2.powerStateP2 = true
           }

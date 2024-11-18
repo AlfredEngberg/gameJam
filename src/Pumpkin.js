@@ -38,7 +38,7 @@ export default class Pumpkin extends Enemy {
   hit(damage) {
     this.image = this.hurtImage
     this.damageTaken = damage
-    console.log('damage:', damage)
+    /* console.log('damage:', damage) */
     this.speed = 0
     this.isHurt = true
     setTimeout(() => {

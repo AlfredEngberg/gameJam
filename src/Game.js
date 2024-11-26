@@ -1,57 +1,59 @@
-import InputHandler from './InputHandler.js'
 import Player from './Player.js'
 import Player2 from './Player2.js'
-import UserInterface from './UserInterface.js'
+
 import Pumpkin from './Pumpkin.js'
 import Beetle from './Beetle.js'
 import RangedEnemy from './RangedEnemy.js'
 import Boss from './Boss.js'
+import Level from './Level.js'
+
 import Candy from './Candy.js'
-/* import Stinger from './assets/sounds/Stinger.wav' */
+import PowerUp from './PowerUp.js'
+
+import InputHandler from './InputHandler.js'
 import Background from './Background.js'
 import Titlescreen from './Titlescreen.js'
-/* import MainMusic from './assets/sounds/MainMusic.ogg'
-import MenuMusic from './assets/sounds/MenuMusic.ogg' */
+import UserInterface from './UserInterface.js'
+
 import HealthBar from './HealthBar.js'
 import HealthBarP2 from './HealthBarP2.js'
 import GameOverScreen from './GameOverScreen.js'
 import WinScreen from './WinScreen.js'
-import PowerUp from './PowerUp.js'
 export default class Game {
   constructor(width, height, canvasPosition, assets) {
     this.assets = assets
     this.width = width
     this.height = height
     this.canvasPosition = canvasPosition
-    this.input = new InputHandler(this)
-    this.ui = new UserInterface(this)
+    this.gravity = 0
     this.keys = []
     this.enemies = []
-    this.gameOver = false
-    this.gravity = 0
-    this.debug = false
     this.gameTime = 0
     this.enemyTimer = 0
-    this.enemyInterval = 1000
     this.enemiesKilled = 0
-    this.bossSpawned = false
-    this.gameWin = false
+    this.enemyInterval = 1000
+    
+    this.input = new InputHandler(this)
+    this.ui = new UserInterface(this)
     this.Titlescreen = new Titlescreen(this)
     this.background = new Background(this)
-    this.sound = assets.Stinger_wav.data/* new Audio
-    this.sound.src = Stinger */
     this.WinScreen = new WinScreen(this)
     this.HealthBar = new HealthBar(this)
     this.HealthBarP2 = new HealthBarP2(this)
     this.GameOverScreen = new GameOverScreen(this)
+    
+    this.sound = assets.Stinger_wav.data
     this.PumpkinSound = assets.MantisHurt_wav.data
     this.RangedEnemySound = assets.RangedEnemyHit_wav.data
     this.DamageSound = assets.DamageSound_wav.data
     this.BeetleHit= assets.BeetleHit_wav.data
-    this.MainMusic = assets.MainMusic_ogg.data/* new Audio
-    this.MainMusic.src = MainMusic */
-    this.MenuMusic = assets.MenuMusic_ogg.data/* new Audio
-    this.MenuMusic.src = MenuMusic */
+    this.MainMusic = assets.MainMusic_ogg.data
+    this.MenuMusic = assets.MenuMusic_ogg.data
+    
+    this.gameOver = false
+    this.debug = false
+    this.bossSpawned = false
+    this.gameWin = false
     this.gameStart = false
     this.viewMainMenu = true
     this.viewControls = false
@@ -61,6 +63,8 @@ export default class Game {
     this.player2 = new Player2(this)
 
     this.enemyProjectiles = []
+
+    this.level = new Level(this)
   }
 
   update(deltaTime) {
@@ -74,41 +78,8 @@ export default class Game {
 
 
     if (this.gameStart === true && this.gameOver === false) {
-      if (this.enemiesKilled === 10 && this.bossSpawned === false) {
-        for (let i = 0; i < this.enemies.length; i++) {
-          if (this.enemies[i].type !== 'boss') {
-            this.enemies[i].markedForDeletion = true
-          }
-        }
-        this.enemies.push(new Boss(this, 200, 100))
-        this.sound.play();
-        this.bossSpawned = true
-        console.log('boss spawned')
-      } else if (this.enemyTimer > this.enemyInterval && this.enemiesKilled < 10) {
-        let x = Math.random() < 0.5 ? 0 : this.width // spawn on left or right edge
-        let y = Math.random() < 0.5 ? 0 : this.height // spawn on top or bottom edge
-        if (x === 0) {
-          y = Math.random() * this.height // if on left edge, randomize y position
-        } else if (x === this.width) {
-          y = Math.random() * this.height // if on right edge, randomize y position
-        } else if (y === 0) {
-          x = Math.random() * this.width // if on top edge, randomize x position
-        } else {
-          x = Math.random() * this.width // if on bottom edge, randomize x position
-        }
-        if (Math.random() > 0.5) {
-          this.enemies.push(new Pumpkin(this, x, y))
-        } else if (Math.random() < 0.3) {
-          this.enemies.push(new Candy(this, x, y))
-        } else if (Math.random() < 0.4) {
-          this.enemies.push(new RangedEnemy(this, x, y))
-        } else if (Math.random() < 0.9) {
-          this.enemies.push(new Beetle(this, x, y))
-        }
-        this.enemyTimer = 0
-      } else {
-        this.enemyTimer += deltaTime
-      }
+      this.level.update(deltaTime)
+
       this.player.update(deltaTime)
       this.player2.update(deltaTime)
 

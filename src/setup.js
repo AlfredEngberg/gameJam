@@ -55,6 +55,14 @@ sounds.forEach(sound => {
     },
     (progress) => {
       // Update progress bar or loading screen
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(loadingScreen, 0, 0, canvas.width, canvas.height);
+      ctx.textAlign = "center";
+      ctx.fillStyle = "black";
+      ctx.font = "70px Arial";
+      ctx.fillText(`Loading progress: ${Math.floor(progress * 100)}%`, 427, 200);
+      ctx.strokeRect(100,300,654,50);
+      ctx.fillRect(100,300,654 * progress,50);
       console.log(`Loading progress: ${Math.floor(progress * 100)}%`);
     }
   );

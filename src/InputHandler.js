@@ -65,6 +65,7 @@ export default class InputHandler {
         this.game.player.y = 100
         this.game.player2.x = 500
         this.game.player2.y = 500
+        this.game.enemies = []
       }
 
       // For starting the game

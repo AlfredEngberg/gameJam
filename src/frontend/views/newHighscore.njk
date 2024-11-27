@@ -1,0 +1,27 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<h2>Post new highscore</h2>
+<form method="post" action="/newHighscore">
+
+    <fieldset>
+        <label for="username">username</label>
+        <input type="text" name="username" id="username" required>
+    </fieldset>
+
+    <fieldset>
+        <label for="score">score</label>
+        <input type="number" name="score" id="score" required>
+    </fieldset>
+
+    <fieldset>
+        <select name="gameType" id="gameType">
+            {% for game in games %}
+            <option value="{{ game.id }}">{{ game.name }}</option>
+            {% endfor %}
+        </select>
+    </fieldset>
+
+    <input type="submit">
+</form>
+{% endblock %}
